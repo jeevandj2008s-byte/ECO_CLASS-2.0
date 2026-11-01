@@ -48,113 +48,126 @@ export function SimDebugModal() {
         bottom: '80px',
         right: '20px',
         width: '360px',
-        background: 'var(--bg-surface-elevated)',
-        border: '1px solid var(--border-violet)',
-        borderRadius: 'var(--radius-lg)',
-        boxShadow: '0 20px 48px rgba(0, 0, 0, 0.75), 0 0 24px rgba(109, 79, 224, 0.3)',
-        padding: '16px',
+        background: '#080814',
+        border: '1px solid rgba(124, 58, 237, 0.35)',
+        borderRadius: '16px',
+        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.85), 0 0 24px rgba(124, 58, 237, 0.25)',
+        padding: '18px',
         zIndex: 100,
         color: '#fff',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700 }}>
-          <Terminal size={16} color="var(--accent-mint)" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 500 }}>
+          <div className="strata-icon-tile" style={{ width: '28px', height: '28px' }}>
+            <Terminal size={14} color="#a78bfa" />
+          </div>
           <span>Sim Debug Console</span>
-          <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>Ctrl+Shift+D</span>
+          <span style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-mono)' }}>Ctrl+Shift+D</span>
         </div>
         <button
           onClick={() => setIsOpen(false)}
-          style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+          style={{ background: 'transparent', border: 'none', color: 'rgba(255, 255, 255, 0.4)', cursor: 'pointer' }}
+          aria-label="Close debug console"
         >
           <X size={16} />
         </button>
       </div>
 
-      <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
-        Current Role: <strong>{session.role}</strong> &bull; Target: CR-204 (Turing Block)
+      <div style={{ fontSize: '12px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.5)', marginBottom: '14px' }}>
+        Current Role: <strong style={{ color: '#fff', fontWeight: 500 }}>{session.role}</strong> &bull; Target: CR-204 (Turing Block)
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
         <button
           onClick={() => triggerScenario('lone_student_back')}
           style={{
-            padding: '8px',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '6px',
+            padding: '9px 10px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '8px',
             color: '#fff',
             fontSize: '11px',
+            fontWeight: 400,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
             cursor: 'pointer',
+            transition: 'all 0.15s ease',
           }}
         >
-          <Users size={12} color="var(--accent-mint)" />
-          1 Student (Back)
+          <Users size={12} color="#c4b5fd" />
+          <span>1 Student (Back)</span>
         </button>
 
         <button
           onClick={() => triggerScenario('sunny_day_daylight_harvest')}
           style={{
-            padding: '8px',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '6px',
+            padding: '9px 10px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '8px',
             color: '#fff',
             fontSize: '11px',
+            fontWeight: 400,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
             cursor: 'pointer',
+            transition: 'all 0.15s ease',
           }}
         >
           <Sun size={12} color="#facc15" />
-          Sunny Harvest
+          <span>Sunny Harvest</span>
         </button>
 
         <button
           onClick={() => triggerScenario('empty_room_idle')}
           style={{
-            padding: '8px',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '6px',
+            padding: '9px 10px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '8px',
             color: '#fff',
             fontSize: '11px',
+            fontWeight: 400,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
             cursor: 'pointer',
+            transition: 'all 0.15s ease',
           }}
         >
           <Zap size={12} color="#94a3b8" />
-          Empty Shutdown
+          <span>Empty Shutdown</span>
         </button>
 
         <button
           onClick={() => triggerScenario('short_circuit')}
           style={{
-            padding: '8px',
-            background: 'rgba(239, 68, 68, 0.15)',
+            padding: '9px 10px',
+            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.18), rgba(239, 68, 68, 0.08))',
             border: '1px solid rgba(239, 68, 68, 0.4)',
-            borderRadius: '6px',
+            borderRadius: '8px',
             color: '#fca5a5',
             fontSize: '11px',
+            fontWeight: 400,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
             cursor: 'pointer',
+            transition: 'all 0.15s ease',
           }}
         >
           <AlertTriangle size={12} color="#ef4444" />
-          Short Circuit Trip
+          <span>Short Circuit Trip</span>
         </button>
       </div>
 
       {statusText && (
-        <div style={{ padding: '6px 8px', background: 'var(--bg-surface)', borderRadius: '4px', fontSize: '11px', color: 'var(--accent-mint)', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ padding: '8px 10px', background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '6px', fontSize: '11px', color: '#c4b5fd', fontFamily: 'var(--font-mono)' }}>
           {statusText}
         </div>
       )}

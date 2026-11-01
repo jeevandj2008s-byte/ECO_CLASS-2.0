@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, Activity, Zap, ChevronRight, X } from 'lucide-react';
+import { Sparkles, Zap, X } from 'lucide-react';
 
 const ROTATING_TIPS = [
   'Row 5 last-bench targeted lighting saved 48W in CR-204',
@@ -55,16 +55,16 @@ export function LiveTicker() {
         zIndex: 40,
         maxWidth: '92vw',
         width: 'max-content',
-        background: 'rgba(17, 17, 24, 0.92)',
+        background: 'rgba(8, 8, 20, 0.85)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid var(--border-medium)',
+        border: '1px solid rgba(124, 58, 237, 0.25)',
         borderRadius: 'var(--radius-pill)',
         padding: '6px 14px 6px 10px',
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
-        boxShadow: '0 12px 32px rgba(0,0,0,0.6), 0 0 20px rgba(109, 79, 224, 0.2)',
+        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.7), 0 0 20px rgba(124, 58, 237, 0.15)',
       }}
       className="live-ticker-container"
     >
@@ -74,14 +74,14 @@ export function LiveTicker() {
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          padding: '4px 8px',
-          background: 'rgba(126, 232, 214, 0.15)',
-          border: '1px solid var(--border-mint)',
+          padding: '4px 10px',
+          background: 'rgba(124, 58, 237, 0.15)',
+          border: '1px solid rgba(124, 58, 237, 0.35)',
           borderRadius: 'var(--radius-pill)',
-          color: 'var(--accent-mint)',
+          color: '#c4b5fd',
           fontSize: '11px',
           fontFamily: 'var(--font-mono)',
-          fontWeight: 700,
+          fontWeight: 600,
           whiteSpace: 'nowrap',
         }}
       >
@@ -90,8 +90,8 @@ export function LiveTicker() {
             width: '6px',
             height: '6px',
             borderRadius: '50%',
-            background: 'var(--status-emerald)',
-            boxShadow: '0 0 6px #10b981',
+            background: '#8b5cf6',
+            boxShadow: '0 0 6px #8b5cf6',
           }}
         />
         ECO CAMPUS
@@ -105,22 +105,23 @@ export function LiveTicker() {
           gap: '4px',
           fontSize: '12px',
           fontFamily: 'var(--font-mono)',
-          fontWeight: 600,
+          fontWeight: 400,
           color: '#fff',
           whiteSpace: 'nowrap',
         }}
       >
-        <Zap size={14} color="#facc15" />
+        <Zap size={13} color="#ddd6fe" />
         <span>{liveKW} kW</span>
       </div>
 
-      <span style={{ color: 'var(--border-medium)' }} className="hide-on-mobile">|</span>
+      <span style={{ color: 'rgba(255, 255, 255, 0.15)' }} className="hide-on-mobile">|</span>
 
       {/* Rotating Tip */}
       <div
         style={{
           fontSize: '12px',
-          color: 'var(--text-secondary)',
+          fontWeight: 300,
+          color: 'rgba(255, 255, 255, 0.5)',
           maxWidth: '380px',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -131,7 +132,7 @@ export function LiveTicker() {
         {ROTATING_TIPS[tipIndex]}
       </div>
 
-      <span style={{ color: 'var(--border-medium)' }}>|</span>
+      <span style={{ color: 'rgba(255, 255, 255, 0.15)' }}>|</span>
 
       {/* AI Sparkle Button */}
       <Link
@@ -140,19 +141,19 @@ export function LiveTicker() {
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          padding: '4px 10px',
-          background: 'linear-gradient(135deg, #6d4fe0, #8b5cf6)',
+          padding: '4px 12px',
+          background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)',
           borderRadius: 'var(--radius-pill)',
           color: '#fff',
           fontSize: '11px',
-          fontWeight: 700,
+          fontWeight: 500,
           textDecoration: 'none',
-          boxShadow: '0 0 14px rgba(109, 79, 224, 0.4)',
+          boxShadow: '0 0 14px rgba(124, 58, 237, 0.35)',
           whiteSpace: 'nowrap',
         }}
       >
         <Sparkles size={12} color="#fff" />
-        Ask Eco AI
+        <span>Ask Eco AI</span>
       </Link>
 
       {/* Dismiss */}
@@ -161,7 +162,7 @@ export function LiveTicker() {
         style={{
           background: 'transparent',
           border: 'none',
-          color: 'var(--text-muted)',
+          color: 'rgba(255, 255, 255, 0.35)',
           cursor: 'pointer',
           padding: '2px',
           display: 'flex',

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navbar';
 import { SiteFooter } from '@/components/footer';
 import { LiveTicker } from '@/components/live-ticker';
 import { SimDebugModal } from '@/components/sim-debug-modal';
+import { WebglBackground } from '@/components/webgl-background';
 import { CAMPUS_CONFIG } from '@/lib/config/campus';
 
 export const metadata: Metadata = {
@@ -19,9 +20,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
+        <WebglBackground />
         <RoleProvider>
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', zIndex: 1 }}>
             <Navbar />
             <main style={{ flex: 1, padding: '0 20px', maxWidth: '1360px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
               {children}

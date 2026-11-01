@@ -40,7 +40,7 @@ export function Navbar() {
 
   const roleColors: Record<UserRole, { bg: string; text: string; border: string }> = {
     admin: { bg: 'rgba(239, 68, 68, 0.15)', text: '#fca5a5', border: 'rgba(239, 68, 68, 0.4)' },
-    hod: { bg: 'rgba(168, 85, 247, 0.15)', text: '#d8b4fe', border: 'rgba(168, 85, 247, 0.4)' },
+    hod: { bg: 'rgba(139, 92, 246, 0.18)', text: '#c4b5fd', border: 'rgba(139, 92, 246, 0.45)' },
     worker: { bg: 'rgba(245, 158, 11, 0.15)', text: '#fcd34d', border: 'rgba(245, 158, 11, 0.4)' },
     user: { bg: 'rgba(126, 232, 214, 0.15)', text: '#7ee8d6', border: 'rgba(126, 232, 214, 0.4)' },
   };
@@ -53,10 +53,10 @@ export function Navbar() {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        background: 'rgba(11, 11, 16, 0.88)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-subtle)',
+        background: 'rgba(5, 5, 16, 0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(124, 58, 237, 0.12)',
       }}
     >
       <div
@@ -88,27 +88,28 @@ export function Navbar() {
               width: '36px',
               height: '36px',
               borderRadius: '10px',
-              background: 'linear-gradient(135deg, #6d4fe0, #7ee8d6)',
+              background: 'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 16px rgba(109, 79, 224, 0.4)',
+              boxShadow: '0 0 16px rgba(124, 58, 237, 0.35)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
             }}
           >
-            <Layers size={20} color="#0b0b10" strokeWidth={2.5} />
+            <Layers size={19} color="#ffffff" strokeWidth={2.2} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontWeight: 800, fontSize: '18px', letterSpacing: '-0.02em' }}>
+              <span style={{ fontWeight: 600, fontSize: '17px', letterSpacing: '-0.01em', color: '#fff' }}>
                 Eco Class
               </span>
               <span
                 style={{
-                  width: '7px',
-                  height: '7px',
+                  width: '6px',
+                  height: '6px',
                   borderRadius: '50%',
-                  background: 'var(--status-emerald)',
-                  boxShadow: '0 0 8px #10b981',
+                  backgroundColor: '#8b5cf6',
+                  boxShadow: '0 0 8px #8b5cf6',
                   display: 'inline-block',
                 }}
                 title="Telemetry Live & Connected"
@@ -116,10 +117,10 @@ export function Navbar() {
             </div>
             <span
               style={{
-                fontSize: '11px',
-                color: 'var(--accent-mint)',
-                letterSpacing: '0.04em',
-                fontWeight: 600,
+                fontSize: '10px',
+                color: 'rgba(255, 255, 255, 0.4)',
+                letterSpacing: '0.08em',
+                fontWeight: 400,
                 textTransform: 'uppercase',
               }}
             >
@@ -128,7 +129,7 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Scrollable Navigation */}
+        {/* Desktop Navigation */}
         <nav
           style={{
             display: 'none',
@@ -148,15 +149,16 @@ export function Navbar() {
                 href={link.href}
                 style={{
                   padding: '7px 12px',
-                  borderRadius: 'var(--radius-sm)',
+                  borderRadius: '8px',
                   fontSize: '13px',
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? 'var(--accent-mint)' : 'var(--text-secondary)',
-                  background: isActive ? 'var(--accent-mint-subtle)' : 'transparent',
-                  border: `1px solid ${isActive ? 'var(--border-mint)' : 'transparent'}`,
+                  fontWeight: isActive ? 500 : 300,
+                  color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.55)',
+                  background: isActive ? 'rgba(124, 58, 237, 0.12)' : 'transparent',
+                  border: `1px solid ${isActive ? 'rgba(124, 58, 237, 0.35)' : 'transparent'}`,
                   textDecoration: 'none',
                   whiteSpace: 'nowrap',
-                  transition: 'all 0.15s ease',
+                  letterSpacing: '0.01em',
+                  transition: 'all 0.18s ease',
                 }}
               >
                 {link.label}
@@ -174,18 +176,19 @@ export function Navbar() {
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '6px 12px',
-              background: 'rgba(239, 68, 68, 0.12)',
-              border: '1px solid rgba(239, 68, 68, 0.35)',
+              padding: '7px 14px',
+              background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.14), rgba(239, 68, 68, 0.05))',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
               borderRadius: 'var(--radius-pill)',
               color: '#fca5a5',
               fontSize: '12px',
-              fontWeight: 600,
+              fontWeight: 500,
               textDecoration: 'none',
+              letterSpacing: '0.02em',
               transition: 'all 0.2s ease',
             }}
           >
-            <AlertTriangle size={14} />
+            <AlertTriangle size={13} />
             <span className="hide-on-mobile">Report Issue</span>
           </Link>
 
@@ -197,12 +200,15 @@ export function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '4px 8px 4px 4px',
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-medium)',
+                padding: '4px 10px 4px 4px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: 'var(--radius-pill)',
                 color: 'var(--text-primary)',
                 cursor: 'pointer',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                transition: 'all 0.2s ease',
               }}
               aria-label="User menu and role switcher"
             >
@@ -211,12 +217,12 @@ export function Navbar() {
                   width: '28px',
                   height: '28px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #6d4fe0, #a78bfa)',
+                  background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '11px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: '#fff',
                 }}
               >
@@ -229,13 +235,14 @@ export function Navbar() {
                     fontFamily: 'var(--font-mono)',
                     textTransform: 'uppercase',
                     color: currentRoleStyle.text,
-                    fontWeight: 700,
+                    fontWeight: 600,
+                    letterSpacing: '0.05em',
                   }}
                 >
                   {session.role}
                 </span>
               </div>
-              <ChevronDown size={14} color="var(--text-muted)" />
+              <ChevronDown size={13} color="rgba(255,255,255,0.4)" />
             </button>
 
             {/* Dropdown Menu */}
@@ -244,18 +251,18 @@ export function Navbar() {
                 style={{
                   position: 'absolute',
                   right: 0,
-                  top: '115%',
+                  top: '118%',
                   width: '260px',
-                  background: 'var(--bg-surface-elevated)',
-                  border: '1px solid var(--border-medium)',
+                  background: '#080814',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   borderRadius: 'var(--radius-md)',
-                  boxShadow: '0 16px 36px rgba(0,0,0,0.6)',
-                  padding: '12px',
+                  boxShadow: '0 20px 48px rgba(0, 0, 0, 0.8)',
+                  padding: '14px',
                   zIndex: 100,
                 }}
               >
                 <div style={{ paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '10px' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#fff' }}>{session.name}</div>
+                  <div style={{ fontSize: '13px', fontWeight: 500, color: '#fff' }}>{session.name}</div>
                   <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{session.email || 'No email attached'}</div>
                   <div
                     style={{
@@ -263,22 +270,22 @@ export function Navbar() {
                       marginTop: '6px',
                       fontSize: '10px',
                       fontFamily: 'var(--font-mono)',
-                      padding: '2px 6px',
+                      padding: '2px 8px',
                       borderRadius: '4px',
                       background: currentRoleStyle.bg,
                       color: currentRoleStyle.text,
                       border: `1px solid ${currentRoleStyle.border}`,
                       textTransform: 'uppercase',
-                      fontWeight: 700,
+                      fontWeight: 600,
                     }}
                   >
                     Active Role: {session.role}
                   </div>
                 </div>
 
-                {/* Role Switcher for Pair/Reviewer Demo */}
+                {/* Role Switcher for Demo */}
                 <div style={{ marginBottom: '10px' }}>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px', fontWeight: 600 }}>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px', fontWeight: 500 }}>
                     Switch Demo Role
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px' }}>
@@ -290,15 +297,16 @@ export function Navbar() {
                           setUserDropdownOpen(false);
                         }}
                         style={{
-                          padding: '5px 8px',
-                          borderRadius: '4px',
-                          border: `1px solid ${session.role === r ? 'var(--accent-mint)' : 'var(--border-subtle)'}`,
-                          background: session.role === r ? 'var(--accent-mint-subtle)' : 'var(--bg-surface)',
-                          color: session.role === r ? 'var(--accent-mint)' : 'var(--text-secondary)',
+                          padding: '6px 8px',
+                          borderRadius: '6px',
+                          border: `1px solid ${session.role === r ? 'rgba(124, 58, 237, 0.5)' : 'rgba(255, 255, 255, 0.08)'}`,
+                          background: session.role === r ? 'rgba(124, 58, 237, 0.16)' : 'rgba(255, 255, 255, 0.02)',
+                          color: session.role === r ? '#c4b5fd' : 'rgba(255, 255, 255, 0.5)',
                           fontSize: '11px',
                           textTransform: 'uppercase',
-                          fontWeight: 600,
+                          fontWeight: 500,
                           cursor: 'pointer',
+                          transition: 'all 0.15s ease',
                         }}
                       >
                         {r}
@@ -324,10 +332,10 @@ export function Navbar() {
                       color: '#f87171',
                       fontSize: '12px',
                       cursor: 'pointer',
-                      borderRadius: '4px',
+                      borderRadius: '6px',
                     }}
                   >
-                    <LogOut size={14} />
+                    <LogOut size={13} />
                     Reset to Guest / Logout
                   </button>
                 </div>
@@ -339,11 +347,11 @@ export function Navbar() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{
-              background: 'transparent',
-              border: '1px solid var(--border-subtle)',
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               color: '#fff',
               padding: '6px',
-              borderRadius: '6px',
+              borderRadius: '8px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -352,7 +360,7 @@ export function Navbar() {
             className="mobile-toggle"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
@@ -361,12 +369,12 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div
           style={{
-            background: 'var(--bg-surface-elevated)',
-            borderBottom: '1px solid var(--border-medium)',
+            background: '#080814',
+            borderBottom: '1px solid rgba(124, 58, 237, 0.18)',
             padding: '16px 20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
+            gap: '6px',
           }}
         >
           {navLinks.map((link) => (
@@ -376,12 +384,12 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               style={{
                 padding: '10px 12px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 fontSize: '14px',
-                color: pathname === link.href ? 'var(--accent-mint)' : '#e2e8f0',
-                background: pathname === link.href ? 'var(--accent-mint-subtle)' : 'transparent',
+                color: pathname === link.href ? '#ffffff' : 'rgba(255, 255, 255, 0.6)',
+                background: pathname === link.href ? 'rgba(124, 58, 237, 0.15)' : 'transparent',
                 textDecoration: 'none',
-                fontWeight: pathname === link.href ? 600 : 500,
+                fontWeight: pathname === link.href ? 500 : 300,
               }}
             >
               {link.label}
