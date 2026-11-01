@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # 1. Postgres Database with pgvector extension
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ecoclass-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./supabase/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. MQTT Broker (Mosquitto)
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: ecoclass-mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquittodata:/mosquitto/data
+
+  # 3. Python FastAPI Face Recognition Microservice
+  face-service:
+    build:
+      context: ./face-service
+      dockerfile: Dockerfile
+    container_name: ecoclass-face-service
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - FACE_SERVICE_API_KEY=eco_class_face_service_secret_2026
+    depends_on:
+      - postgres
+
+  # 4. Next.js Full-Stack Web & Backend
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecoclass-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder_anon_key
+      - SUPABASE_SERVICE_ROLE_KEY=placeholder_service_role_key
+      - DATABASE_URL=postgresql://postgres:postgrespassword@postgres:5432/postgres
+      - MQTT_BROKER_URL=mqtt://mosquitto:1883
+      - FACE_SERVICE_URL=http://face-service:8000
+    depends_on:
+      - postgres
+      - mosquitto
+      - face-service
+
+volumes:
+  pgdata:
+  mosquittodata:
