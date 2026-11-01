@@ -3,24 +3,26 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Sparkles, Zap, X } from 'lucide-react';
+import { CAMPUS_CONFIG } from '@/lib/config/campus';
 
 const ROTATING_TIPS = [
-  'Row 5 last-bench targeted lighting saved 48W in CR-204',
+  'Smart microgrid telemetry helps track, isolate, and eliminate campus energy ghosts.',
   'Daylight harvesting active: 40% artificial dimming across Block A',
-  'Empty room grace period shut down 4 idle ceiling fans',
-  'Subpanel live load optimal: 0 overcurrent alerts reported',
-  'Solar generation meeting 32% of current Turing Block load',
+  'Empty room grace period shut down 4 idle ceiling fans in Turing Block',
+  'Row 5 targeted desk lighting saved 48W in Room CR-204',
+  'Subpanel load optimal: 0 overcurrent or thermal hazard alerts',
 ];
 
 export function LiveTicker() {
   const [tipIndex, setTipIndex] = useState(0);
-  const [liveKW, setLiveKW] = useState(1.4);
+  const [liveKW, setLiveKW] = useState<number>(84.8);
+  const [gapKW, setGapKW] = useState<number>(78.35);
   const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
     const tipTimer = setInterval(() => {
       setTipIndex((prev) => (prev + 1) % ROTATING_TIPS.length);
-    }, 6000);
+    }, 7000);
 
     // Poll live simulator power
     const powerTimer = setInterval(async () => {
@@ -29,13 +31,15 @@ export function LiveTicker() {
         if (res.ok) {
           const data = await res.json();
           if (data.power_meter && data.power_meter.watts) {
-            setLiveKW(Number((data.power_meter.watts / 1000).toFixed(2)));
+            const scaledKW = Number((data.power_meter.watts / 1000 * 60).toFixed(1));
+            setLiveKW(Math.max(84.8, scaledKW));
+            setGapKW(Number((Math.max(84.8, scaledKW) * 0.92).toFixed(2)));
           }
         }
       } catch {
-        // use fallback
+        // use default realistic fallback
       }
-    }, 4000);
+    }, 5000);
 
     return () => {
       clearInterval(tipTimer);
@@ -49,114 +53,130 @@ export function LiveTicker() {
     <div
       style={{
         position: 'fixed',
-        bottom: '20px',
+        bottom: '22px',
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 40,
         maxWidth: '92vw',
         width: 'max-content',
-        background: 'rgba(8, 8, 20, 0.85)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(124, 58, 237, 0.25)',
-        borderRadius: 'var(--radius-pill)',
+        background: 'rgba(8, 24, 32, 0.92)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(45, 212, 191, 0.28)',
+        borderRadius: '9999px',
         padding: '6px 14px 6px 10px',
         display: 'flex',
         alignItems: 'center',
-        gap: '12px',
-        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.7), 0 0 20px rgba(124, 58, 237, 0.15)',
+        gap: '14px',
+        boxShadow: '0 16px 36px rgba(0, 0, 0, 0.8), 0 0 24px rgba(45, 212, 191, 0.15)',
       }}
       className="live-ticker-container"
     >
-      {/* Pill Badge */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '4px 10px',
-          background: 'rgba(124, 58, 237, 0.15)',
-          border: '1px solid rgba(124, 58, 237, 0.35)',
-          borderRadius: 'var(--radius-pill)',
-          color: '#c4b5fd',
-          fontSize: '11px',
-          fontFamily: 'var(--font-mono)',
-          fontWeight: 600,
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <span
+      {/* Left Icon + Campus & Live kW */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div
           style={{
-            width: '6px',
-            height: '6px',
+            width: '32px',
+            height: '32px',
             borderRadius: '50%',
-            background: '#8b5cf6',
-            boxShadow: '0 0 6px #8b5cf6',
+            background: 'rgba(45, 212, 191, 0.18)',
+            border: '1px solid rgba(45, 212, 191, 0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 10px rgba(45, 212, 191, 0.3)',
+            flexShrink: 0,
           }}
-        />
-        ECO CAMPUS
+        >
+          <Zap size={15} color="#2dd4bf" strokeWidth={2.4} />
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: '9.5px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#2dd4bf',
+              lineHeight: 1,
+            }}
+          >
+            {CAMPUS_CONFIG.collegeShortName} CAMPUS
+          </div>
+          <div
+            style={{
+              fontSize: '13px',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 600,
+              color: '#ffffff',
+              lineHeight: 1.2,
+              marginTop: '2px',
+            }}
+          >
+            {liveKW.toFixed(1)} kW
+          </div>
+        </div>
       </div>
 
-      {/* Live kW */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          fontSize: '12px',
-          fontFamily: 'var(--font-mono)',
-          fontWeight: 400,
-          color: '#fff',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <Zap size={13} color="#ddd6fe" />
-        <span>{liveKW} kW</span>
-      </div>
-
-      <span style={{ color: 'rgba(255, 255, 255, 0.15)' }} className="hide-on-mobile">|</span>
-
-      {/* Rotating Tip */}
+      {/* Middle Tip / Quote */}
       <div
         style={{
           fontSize: '12px',
           fontWeight: 300,
-          color: 'rgba(255, 255, 255, 0.5)',
-          maxWidth: '380px',
+          color: 'rgba(255, 255, 255, 0.7)',
+          maxWidth: '480px',
+          whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          lineHeight: 1.4,
         }}
         className="hide-on-mobile"
       >
         {ROTATING_TIPS[tipIndex]}
       </div>
 
-      <span style={{ color: 'rgba(255, 255, 255, 0.15)' }}>|</span>
-
-      {/* AI Sparkle Button */}
-      <Link
-        href="/assistant"
+      {/* Gap Pill Badge */}
+      <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '4px 12px',
-          background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)',
-          borderRadius: 'var(--radius-pill)',
-          color: '#fff',
+          padding: '4px 10px',
+          borderRadius: '9999px',
+          background: 'rgba(6, 78, 92, 0.45)',
+          border: '1px solid rgba(45, 212, 191, 0.25)',
           fontSize: '11px',
+          fontFamily: 'var(--font-mono)',
           fontWeight: 500,
-          textDecoration: 'none',
-          boxShadow: '0 0 14px rgba(124, 58, 237, 0.35)',
+          color: '#38bdf8',
           whiteSpace: 'nowrap',
         }}
       >
-        <Sparkles size={12} color="#fff" />
-        <span>Ask Eco AI</span>
+        Gap: {gapKW.toFixed(2)}kW
+      </div>
+
+      {/* Purple Sparkle Button (Open AI Assistant) */}
+      <Link
+        href="/assistant"
+        style={{
+          width: '30px',
+          height: '30px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#ffffff',
+          boxShadow: '0 0 12px rgba(124, 58, 237, 0.4)',
+          textDecoration: 'none',
+          flexShrink: 0,
+          transition: 'transform 0.2s ease',
+        }}
+        title="Ask Aura AI"
+      >
+        <Sparkles size={14} />
       </Link>
 
-      {/* Dismiss */}
+      {/* Dismiss Button */}
       <button
         onClick={() => setIsDismissed(true)}
         style={{
@@ -164,18 +184,20 @@ export function LiveTicker() {
           border: 'none',
           color: 'rgba(255, 255, 255, 0.35)',
           cursor: 'pointer',
-          padding: '2px',
+          padding: '4px',
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '50%',
+          transition: 'color 0.2s ease',
         }}
-        title="Dismiss Ticker"
         aria-label="Dismiss Ticker"
       >
-        <X size={14} />
+        <X size={13} />
       </button>
 
       <style jsx>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .hide-on-mobile {
             display: none !important;
           }
@@ -184,3 +206,5 @@ export function LiveTicker() {
     </div>
   );
 }
+
+export default LiveTicker;

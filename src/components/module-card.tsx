@@ -45,9 +45,9 @@ export function ModuleCard({
     <div
       className="strata-card-wrapper module-card-outer"
       style={{
-        width: '310px',
-        minWidth: '310px',
-        height: '380px',
+        width: '320px',
+        minWidth: '320px',
+        height: '390px',
         scrollSnapAlign: 'start',
       }}
     >
@@ -56,63 +56,67 @@ export function ModuleCard({
         href={finalHref}
         className="strata-card-inner"
         style={{
-          padding: '24px',
+          padding: '28px 24px',
           textDecoration: 'none',
           color: 'inherit',
+          display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'space-between',
         }}
       >
         {/* Top Section */}
         <div>
           {/* Top Row: Icon Tile + Title + Tag Pill */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '22px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div className="strata-icon-tile">
-                <Icon size={18} />
+                <Icon size={18} color="rgba(255, 255, 255, 0.85)" />
               </div>
               <div>
                 <div
                   style={{
                     fontSize: '13px',
-                    fontWeight: 500,
+                    fontWeight: 600,
                     textTransform: 'uppercase',
                     letterSpacing: '0.06em',
-                    color: 'rgba(255, 255, 255, 0.95)',
+                    color: '#ffffff',
                   }}
                 >
                   {title}
                 </div>
               </div>
             </div>
-            <span
-              style={{
-                fontSize: '10px',
-                fontFamily: 'var(--font-mono)',
-                padding: '3px 9px',
-                borderRadius: 'var(--radius-pill)',
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                color: 'rgba(255, 255, 255, 0.4)',
-                letterSpacing: '0.04em',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {tag}
-            </span>
+            {tag && (
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontFamily: 'var(--font-mono)',
+                  padding: '3px 9px',
+                  borderRadius: 'var(--radius-pill)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  border: '1px solid rgba(255, 255, 255, 0.09)',
+                  color: 'rgba(255, 255, 255, 0.55)',
+                  letterSpacing: '0.04em',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {tag}
+              </span>
+            )}
           </div>
 
           {/* Big Stat or Key Highlight */}
           <div
             style={{
-              fontSize: '32px',
+              fontSize: '36px',
               fontWeight: 200,
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.025em',
               marginBottom: '14px',
-              minHeight: '40px',
+              color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
             }}
-            className={statGradient ? 'gradient-text-stat mono-telemetry' : 'mono-telemetry'}
+            className={statGradient ? 'gradient-text-mint mono-telemetry' : 'mono-telemetry'}
           >
             {bigStat}
           </div>
@@ -123,7 +127,7 @@ export function ModuleCard({
               fontSize: '13px',
               fontWeight: 300,
               lineHeight: 1.6,
-              color: 'rgba(255, 255, 255, 0.45)',
+              color: 'rgba(255, 255, 255, 0.48)',
               margin: 0,
             }}
           >
@@ -131,20 +135,32 @@ export function ModuleCard({
           </p>
         </div>
 
-        {/* Bottom Action Pill */}
-        <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+        {/* Bottom Signature Violet Pill Button (from Screenshot 3) */}
+        <div style={{ paddingTop: '16px' }}>
           <div
-            className="strata-btn-pill"
             style={{
-              width: '100%',
-              justifyContent: 'space-between',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 18px',
+              borderRadius: '9999px',
+              background: 'linear-gradient(135deg, #6d4fe0 0%, #5835cf 100%)',
+              color: '#ffffff',
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
+              boxShadow: '0 4px 16px rgba(109, 79, 224, 0.35)',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
+            className="read-now-pill"
           >
-            <span style={{ fontWeight: 400 }}>Read now</span>
-            <ArrowRight size={14} />
+            <span>Read now</span>
+            <ArrowRight size={13} />
           </div>
         </div>
       </Link>
     </div>
   );
 }
+
+export default ModuleCard;

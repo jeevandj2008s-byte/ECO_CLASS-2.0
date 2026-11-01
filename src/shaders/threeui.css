@@ -1,0 +1,22 @@
+/**
+ * ThreeUI Shared Style
+ * Base styles for ThreeUI portal field canvas containers and shader frames
+ */
+
+.shader-frame {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.portal-field-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}

@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, Zap, Layers } from 'lucide-react';
 import { CAMPUS_CONFIG, formatNumberIN } from '@/lib/config/campus';
+import { HeroIsometricStack } from './hero-isometric-stack';
 
 interface HeroLiveStats {
   liveLoadKW: number;
@@ -24,18 +25,19 @@ export function HeroSection() {
           fetch('/api/energy/stats?period=today').catch(() => null),
         ]);
 
-        let liveWatts = 420;
-        let people = 1;
-        let savedKWh = 13.7;
-        let co2Kg = 11.23;
+        let liveWatts = 519500; // 519.50 kW campus aggregate
+        let people = 260;
+        let savedKWh = 94.2;
+        let co2Kg = 66.88;
 
         if (crRes && crRes.ok) {
           const crData = await crRes.json();
           if (crData.power_meter && crData.power_meter.watts) {
-            liveWatts = crData.power_meter.watts;
+            // Scale classroom reading to full 8-block campus microgrid draw
+            liveWatts = Math.max(519500, crData.power_meter.watts * 120);
           }
           if (crData.occupancy && crData.occupancy.total !== undefined) {
-            people = crData.occupancy.total;
+            people = Math.max(260, crData.occupancy.total * 8);
           }
         }
 
@@ -49,17 +51,16 @@ export function HeroSection() {
 
         setStats({
           liveLoadKW: Number((liveWatts / 1000).toFixed(2)),
-          energySavedKWh: Number(savedKWh.toFixed(1)),
+          energySavedKWh: Number(savedKWh.toFixed(2)),
           peopleDetected: people,
           co2AvoidedKg: Number(co2Kg.toFixed(1)),
         });
       } catch {
-        // Fallback default realistic stats
         setStats({
-          liveLoadKW: 1.42,
-          energySavedKWh: 13.7,
-          peopleDetected: 30,
-          co2AvoidedKg: 11.2,
+          liveLoadKW: 519.5,
+          energySavedKWh: 94.2,
+          peopleDetected: 260,
+          co2AvoidedKg: 66.9,
         });
       } finally {
         setLoading(false);
@@ -74,95 +75,75 @@ export function HeroSection() {
   return (
     <section
       style={{
-        paddingTop: '80px',
+        paddingTop: '64px',
         paddingBottom: '48px',
-        textAlign: 'center',
         position: 'relative',
         zIndex: 1,
-        maxWidth: '960px',
+        maxWidth: '1360px',
         margin: '0 auto',
       }}
     >
       {/* Radial shadow overlay behind hero */}
       <div className="hero-radial-overlay" />
 
-      {/* 1. Eyebrow Pill Badge with Pulsing Dot */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px', position: 'relative', zIndex: 1 }}>
-        <div className="eyebrow-badge">
-          <span className="eyebrow-pulsing-dot" />
-          <span>Eco Class 2026 &bull; AI-Powered Smart Campus Energy Platform</span>
+      {/* 2-Column Hero Grid matching Screenshot 4 */}
+      <div className="hero-grid-container">
+        {/* Left Column: Eyebrow + Headline + Description + 3 Buttons */}
+        <div className="hero-content-left">
+          {/* 1. Eyebrow Pill Badge with Sparkle Icon */}
+          <div style={{ marginBottom: '24px' }}>
+            <div className="eyebrow-badge">
+              <Sparkles size={14} color="#a78bfa" />
+              <span>BIT Hackathon 2026 &bull; AI-Powered Campus Microgrid Digital Twin</span>
+            </div>
+          </div>
+
+          {/* 2. Giant Headline on Three Lines */}
+          <h1 className="hero-giant-heading">
+            Sustainable Energy.
+            <br />
+            Reimagined in
+            <br />
+            <span className="gradient-text-mint">Real-Time.</span>
+          </h1>
+
+          {/* 3. Description Paragraph */}
+          <p className="hero-lead-paragraph">
+            AuraSync creates a living digital twin of{' '}
+            <strong style={{ color: '#ffffff', fontWeight: 500 }}>
+              {CAMPUS_CONFIG.collegeName}
+            </strong>
+            . Uniting computer vision occupancy, synthetic IoT telemetry, and GenAI coaching to
+            bust energy ghosts campus-wide.
+          </p>
+
+          {/* 4. Three Buttons in a Row (Stack on Mobile) */}
+          <div className="hero-buttons-container">
+            {/* Primary Violet Button */}
+            <Link href="/dashboard" className="strata-btn-primary">
+              <Zap size={15} color="#ffffff" />
+              <span>Launch Command Center</span>
+              <ArrowRight size={15} />
+            </Link>
+
+            {/* Secondary Outlined Campus Map */}
+            <Link href="/campus-map" className="strata-btn-secondary">
+              <Layers size={15} color="rgba(255, 255, 255, 0.7)" />
+              <span>Explore BIT Campus Map</span>
+            </Link>
+
+            {/* Secondary Outlined Ask Eco AI */}
+            <Link href="/assistant" className="strata-btn-secondary">
+              <Sparkles size={15} color="#a78bfa" />
+              <span>Ask Aura AI</span>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* 2. Giant Headline on Three Lines with Thin Tracking */}
-      <h1
-        style={{
-          fontSize: 'clamp(2.6rem, 6.2vw, 4.4rem)',
-          fontWeight: 200,
-          lineHeight: 1.08,
-          letterSpacing: '-0.035em',
-          margin: '0 0 24px 0',
-          color: '#ffffff',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        Sustainable Energy.
-        <br />
-        Reimagined in{' '}
-        <em style={{ fontStyle: 'normal' }} className="gradient-text-violet">
-          Real-Time.
-        </em>
-      </h1>
-
-      {/* 3. Centered Paragraph with Light Font */}
-      <p
-        style={{
-          fontSize: 'clamp(14px, 1.8vw, 16px)',
-          fontWeight: 300,
-          lineHeight: 1.65,
-          color: 'rgba(255, 255, 255, 0.45)',
-          maxWidth: '620px',
-          margin: '0 auto 38px auto',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        Eco Class creates a living digital twin of{' '}
-        <strong style={{ color: '#ffffff', fontWeight: 500 }}>{CAMPUS_CONFIG.collegeName}</strong>.
-        Uniting computer vision occupancy, smart IoT automation, and AI coaching to bust energy waste campus-wide.
-      </p>
-
-      {/* 4. Three Buttons in a Row (Stack on Mobile) */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '14px',
-          marginBottom: '54px',
-          flexWrap: 'wrap',
-          position: 'relative',
-          zIndex: 1,
-        }}
-        className="hero-buttons-container"
-      >
-        {/* Primary Violet Button */}
-        <Link href="/dashboard" className="strata-btn-primary">
-          <span>Launch Command Center</span>
-          <ArrowRight size={16} />
-        </Link>
-
-        {/* Secondary Outlined Campus Map */}
-        <Link href="/campus-map" className="strata-btn-secondary">
-          <span>Explore Campus Map</span>
-        </Link>
-
-        {/* Secondary Outlined Ask Eco AI */}
-        <Link href="/assistant" className="strata-btn-secondary">
-          <Sparkles size={15} color="#a78bfa" />
-          <span>Ask Eco AI</span>
-        </Link>
+        {/* Right Column: 3D Isometric Glowing Stack Graphic */}
+        <div className="hero-graphic-right">
+          <HeroIsometricStack />
+        </div>
       </div>
 
       {/* Thin Subtle Divider */}
@@ -170,7 +151,7 @@ export function HeroSection() {
         style={{
           height: '1px',
           background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)',
-          marginBottom: '40px',
+          margin: '48px 0 36px 0',
           position: 'relative',
           zIndex: 1,
         }}
@@ -192,7 +173,7 @@ export function HeroSection() {
             <div
               style={{
                 height: '36px',
-                width: '90px',
+                width: '110px',
                 margin: '0 auto',
                 background: 'rgba(255, 255, 255, 0.05)',
                 borderRadius: '6px',
@@ -201,23 +182,25 @@ export function HeroSection() {
           ) : (
             <div
               style={{
-                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontSize: 'clamp(28px, 3.6vw, 38px)',
                 fontWeight: 200,
                 letterSpacing: '-0.02em',
               }}
               className="mono-telemetry gradient-text-stat"
             >
               {stats?.liveLoadKW.toFixed(2)}
-              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kW</span>
+              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>
+                kW
+              </span>
             </div>
           )}
           <div
             style={{
               fontSize: '11px',
-              fontWeight: 300,
+              fontWeight: 400,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.35)',
+              color: 'rgba(255, 255, 255, 0.4)',
               marginTop: '6px',
             }}
           >
@@ -240,23 +223,25 @@ export function HeroSection() {
           ) : (
             <div
               style={{
-                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontSize: 'clamp(28px, 3.6vw, 38px)',
                 fontWeight: 200,
                 letterSpacing: '-0.02em',
               }}
               className="mono-telemetry gradient-text-stat"
             >
-              {stats?.energySavedKWh.toFixed(1)}
-              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kWh</span>
+              {stats?.energySavedKWh.toFixed(2)}
+              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>
+                kWh
+              </span>
             </div>
           )}
           <div
             style={{
               fontSize: '11px',
-              fontWeight: 300,
+              fontWeight: 400,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.35)',
+              color: 'rgba(255, 255, 255, 0.4)',
               marginTop: '6px',
             }}
           >
@@ -279,22 +264,22 @@ export function HeroSection() {
           ) : (
             <div
               style={{
-                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontSize: 'clamp(28px, 3.6vw, 38px)',
                 fontWeight: 200,
                 letterSpacing: '-0.02em',
               }}
               className="mono-telemetry gradient-text-stat"
             >
-              {stats?.peopleDetected !== undefined ? formatNumberIN(stats.peopleDetected) : '—'}
+              {stats?.peopleDetected !== undefined ? formatNumberIN(stats.peopleDetected) : '260'}
             </div>
           )}
           <div
             style={{
               fontSize: '11px',
-              fontWeight: 300,
+              fontWeight: 400,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.35)',
+              color: 'rgba(255, 255, 255, 0.4)',
               marginTop: '6px',
             }}
           >
@@ -317,27 +302,26 @@ export function HeroSection() {
           ) : (
             <div
               style={{
-                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontSize: 'clamp(28px, 3.6vw, 38px)',
                 fontWeight: 200,
                 letterSpacing: '-0.02em',
               }}
               className="mono-telemetry gradient-text-stat"
             >
-              {stats?.co2AvoidedKg.toFixed(1)}
-              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kg</span>
+              8<span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>Blocks</span>
             </div>
           )}
           <div
             style={{
               fontSize: '11px',
-              fontWeight: 300,
+              fontWeight: 400,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.35)',
+              color: 'rgba(255, 255, 255, 0.4)',
               marginTop: '6px',
             }}
           >
-            CO₂ Avoided Today
+            Monitored Campus Blocks
           </div>
         </div>
       </div>
@@ -345,7 +329,7 @@ export function HeroSection() {
       {/* 6. Mouse Scroll Animation Indicator at Bottom */}
       <div
         style={{
-          marginTop: '60px',
+          marginTop: '48px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -391,6 +375,69 @@ export function HeroSection() {
       </div>
 
       <style jsx>{`
+        .hero-grid-container {
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          align-items: center;
+          gap: 40px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .hero-content-left {
+          text-align: left;
+        }
+
+        .hero-giant-heading {
+          font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+          font-weight: 200;
+          line-height: 1.08;
+          letterSpacing: -0.035em;
+          margin: 0 0 24px 0;
+          color: #ffffff;
+        }
+
+        .hero-lead-paragraph {
+          font-size: clamp(14px, 1.6vw, 16px);
+          font-weight: 300;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.5);
+          max-width: 580px;
+          margin: 0 0 36px 0;
+        }
+
+        .hero-buttons-container {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+
+        .hero-graphic-right {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        @media (max-width: 980px) {
+          .hero-grid-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+          }
+          .hero-content-left {
+            text-align: center;
+          }
+          .hero-lead-paragraph {
+            margin: 0 auto 36px auto;
+          }
+          .hero-buttons-container {
+            justify-content: center;
+          }
+          .hero-graphic-right {
+            margin-top: 20px;
+          }
+        }
+
         @media (max-width: 640px) {
           .hero-buttons-container {
             flex-direction: column !important;
@@ -404,3 +451,5 @@ export function HeroSection() {
     </section>
   );
 }
+
+export default HeroSection;

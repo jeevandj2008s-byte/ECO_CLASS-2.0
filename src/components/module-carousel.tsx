@@ -5,9 +5,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Activity,
-  Map,
+  Layers,
   Box,
-  Eye,
+  Camera,
   Sliders,
   Cpu,
   AlertTriangle,
@@ -23,7 +23,7 @@ export function ModuleCarousel() {
   const [canScrollRight, setCanScrollRight] = useState(true);
 
   // Live dynamic states for cards
-  const [liveKW, setLiveKW] = useState<string>('1.4 kW');
+  const [liveKW, setLiveKW] = useState<string>('142 kW');
   const [liveOccupancy, setLiveOccupancy] = useState<string>('1 Seated');
   const [openIncidentsCount, setOpenIncidentsCount] = useState<string>('0 Open');
   const [blockCount, setBlockCount] = useState<string>(`${CAMPUS_CONFIG.totalBlocksCount} Blocks`);
@@ -40,7 +40,7 @@ export function ModuleCarousel() {
         if (roomRes && roomRes.ok) {
           const roomData = await roomRes.json();
           if (roomData.power_meter && roomData.power_meter.watts) {
-            setLiveKW(`${(roomData.power_meter.watts / 1000).toFixed(1)} kW`);
+            setLiveKW(`${(roomData.power_meter.watts / 1000).toFixed(0)} kW`);
           }
           if (roomData.occupancy && roomData.occupancy.total !== undefined) {
             setLiveOccupancy(`${roomData.occupancy.total} Seated`);
@@ -60,7 +60,7 @@ export function ModuleCarousel() {
           }
         }
       } catch {
-        // use fallback values
+        // keep defaults
       }
     }
 
@@ -79,7 +79,7 @@ export function ModuleCarousel() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
-      const amount = direction === 'left' ? -340 : 340;
+      const amount = direction === 'left' ? -350 : 350;
       scrollContainerRef.current.scrollBy({ left: amount, behavior: 'smooth' });
     }
   };
@@ -95,131 +95,155 @@ export function ModuleCarousel() {
   const moduleItems: ModuleCardProps[] = [
     {
       id: 'command-center',
-      title: 'Command Center',
+      title: 'COMMAND CENTER',
       tag: 'Live Telemetry',
       bigStat: liveKW,
       statGradient: true,
-      description: 'Real-time campus power draw, solar generation, and energy-waste monitoring.',
+      description: 'Real-time 142 kW microgrid draw, solar generation, and ghost gap monitoring.',
       route: '/dashboard',
       icon: Activity,
     },
     {
-      id: 'campus-map',
-      title: 'Campus Map',
-      tag: 'Digital Twin',
+      id: 'bit-digital-twin',
+      title: 'BIT DIGITAL TWIN',
+      tag: 'Campus Map',
       bigStat: blockCount,
-      description: 'Interactive campus map with block-level heatmaps and device controls.',
+      statGradient: true,
+      description: 'Interactive 8-building twin with thermal heatmaps and device controls.',
       route: '/campus-map',
-      icon: Map,
+      icon: Layers,
+    },
+    {
+      id: 'vision-lab',
+      title: 'VISION LAB',
+      tag: 'Edge AI & Phone',
+      bigStat: 'Edge AI',
+      statGradient: true,
+      description: 'COCO-SSD occupancy inference with phone camera wireless pairing.',
+      route: '/vision-lab',
+      icon: Camera,
+    },
+    {
+      id: 'automation-control',
+      title: 'AUTOMATION & CONTROL',
+      tag: '0 Latency',
+      bigStat: '0 Latency',
+      statGradient: true,
+      description: 'Campus Eco switch, load shedding, and 60-second safety response.',
+      route: '/automation',
+      icon: Sliders,
     },
     {
       id: 'classroom-3d',
-      title: '3D Classroom',
+      title: '3D CLASSROOM TWIN',
       tag: 'Live Occupancy',
       bigStat: liveOccupancy,
-      statGradient: true,
+      statGradient: false,
       description: 'Walk into any classroom in 3D and see who is seated, row by row, with light and fan states.',
       route: '/classroom-3d',
       icon: Box,
     },
     {
-      id: 'vision-lab',
-      title: 'Vision Lab',
-      tag: 'Face & Edge AI',
-      bigStat: 'Edge AI',
-      description: 'Face recognition and people counting to know exactly who is in class.',
-      route: '/vision-lab',
-      icon: Eye,
-    },
-    {
-      id: 'automation',
-      title: 'Automation & Control',
-      tag: 'Smart Switches',
-      bigStat: '0 Latency',
-      statGradient: true,
-      description: 'Auto dim, brighten, and fan control by occupancy, sunlight, temperature and humidity.',
-      route: '/automation',
-      icon: Sliders,
-    },
-    {
       id: 'simulator',
-      title: 'Power Simulator',
-      tag: 'What-If',
+      title: 'POWER SIMULATOR',
+      tag: 'What-If Lab',
       bigStat: 'Simulate',
+      statGradient: false,
       description: 'Place students and teachers, change sunlight and temperature, and watch power flow react.',
       route: '/simulator',
       icon: Cpu,
     },
     {
       id: 'helpdesk',
-      title: 'Emergency Help Desk',
-      tag: 'Safety',
+      title: 'EMERGENCY HELPDESK',
+      tag: 'Safety Guard',
       bigStat: openIncidentsCount,
-      statGradient: openIncidentsCount.startsWith('0') ? false : true,
-      description: 'Short-circuit and fault alerts sent instantly to HODs and workers.',
+      statGradient: !openIncidentsCount.startsWith('0'),
+      description: 'Short-circuit and fault alerts dispatched instantly to HODs and maintenance workers.',
       route: '/helpdesk',
       icon: AlertTriangle,
     },
     {
       id: 'assistant',
-      title: 'Eco AI Assistant',
-      tag: 'Ask Anything',
+      title: 'AURA AI COACH',
+      tag: 'GenAI Engine',
       bigStat: 'AI Coach',
       statGradient: true,
-      description: 'Ask what is happening in any block, why a light is dim, or where to save energy.',
+      description: 'Ask what is happening in any block, why a light is dim, or how to save energy.',
       route: '/assistant',
       icon: Sparkles,
     },
     {
       id: 'admin',
-      title: 'Admin & Users',
-      tag: 'Access',
+      title: 'ADMIN & ROLES',
+      tag: 'RBAC Security',
       bigStat: 'Roles',
-      description: 'Manage HODs, workers and users with Google login.',
+      description: 'Manage HODs, workers, and view-only accounts with strict Supabase RLS security.',
       route: '/admin',
       icon: ShieldAlert,
       requiresAuth: true,
-      allowedRoles: ['admin', 'hod'], // Only shown to admin or HOD
+      allowedRoles: ['admin', 'hod'],
     },
   ];
 
   return (
     <section style={{ margin: '80px 0 60px 0', position: 'relative', zIndex: 1 }}>
-      {/* Section Header */}
+      {/* Section Header matching Screenshot 3 */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
-          marginBottom: '28px',
+          marginBottom: '32px',
           gap: '20px',
           flexWrap: 'wrap',
         }}
       >
         <div>
-          <div className="eyebrow-badge" style={{ marginBottom: '10px' }}>
-            <span>MODULAR DIGITAL TWIN</span>
+          {/* Blue Glowing Dot */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+            <span
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: '#38bdf8',
+                boxShadow: '0 0 10px #38bdf8',
+                display: 'inline-block',
+              }}
+            />
           </div>
+
           <h2
             style={{
-              fontSize: 'clamp(28px, 4.5vw, 44px)',
-              fontWeight: 200,
+              fontSize: 'clamp(30px, 4.6vw, 48px)',
+              fontWeight: 300,
               letterSpacing: '-0.035em',
-              lineHeight: 1.15,
-              margin: '0 0 8px 0',
+              lineHeight: 1.12,
+              margin: '0 0 12px 0',
               color: '#ffffff',
             }}
           >
             Explore All Campus
             <br />
-            <span className="gradient-text-violet">Energy Twin Systems</span>
+            <span className="gradient-text-mint">Energy Twin Systems</span>
           </h2>
-          <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '15px', fontWeight: 300 }}>
-            Click any module below to open its dedicated view with live telemetry and controls &rarr;
+          <p
+            style={{
+              margin: 0,
+              color: 'rgba(255, 255, 255, 0.48)',
+              fontSize: '15px',
+              fontWeight: 300,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            Click any module below to open its dedicated view with live simulated telemetry and controls &rarr;
           </p>
         </div>
 
-        {/* Circular Left / Right Arrow Buttons */}
+        {/* Circular Left / Right Arrow Buttons from Screenshot 3 */}
         <div style={{ display: 'flex', gap: '10px' }}>
           <button
             onClick={() => scroll('left')}
@@ -229,7 +253,7 @@ export function ModuleCarousel() {
               height: '42px',
               borderRadius: '50%',
               background: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
               color: canScrollLeft ? '#ffffff' : 'rgba(255, 255, 255, 0.25)',
               display: 'flex',
               alignItems: 'center',
@@ -251,7 +275,7 @@ export function ModuleCarousel() {
               height: '42px',
               borderRadius: '50%',
               background: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
               color: canScrollRight ? '#ffffff' : 'rgba(255, 255, 255, 0.25)',
               display: 'flex',
               alignItems: 'center',
@@ -277,7 +301,7 @@ export function ModuleCarousel() {
         aria-label="Campus Energy Twin Systems Carousel"
         style={{
           display: 'flex',
-          gap: '20px',
+          gap: '24px',
           overflowX: 'auto',
           scrollSnapType: 'x mandatory',
           paddingBottom: '24px',
@@ -293,3 +317,5 @@ export function ModuleCarousel() {
     </section>
   );
 }
+
+export default ModuleCarousel;

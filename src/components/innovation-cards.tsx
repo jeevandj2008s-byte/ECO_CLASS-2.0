@@ -2,31 +2,32 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Map, Cpu, Sparkles, ArrowRight } from 'lucide-react';
+import { Layers, Compass, Sparkles, ArrowRight } from 'lucide-react';
+import { CAMPUS_CONFIG } from '@/lib/config/campus';
 
 export function InnovationCards() {
   const innovations = [
     {
-      title: 'Full-Scale Campus Map',
+      title: 'Full-Scale BIT Campus Map',
       description:
-        'Models the main block, administration block, engineering blocks, sports court, hostel, and charging hub with live telemetry overlays.',
+        'Models BIT Main Block, Administration Block, Engineering Block A, Engineering Block B, Sports Court, Hostel, and EV Charging Hub.',
       linkText: 'Launch Campus Map',
       href: '/campus-map',
-      icon: Map,
+      icon: Layers,
     },
     {
-      title: 'Smart Automation Engine',
+      title: 'Ghost Twin Technology',
       description:
-        'Compares real versus ideal consumption to isolate energy waste: empty-room fans and lights, idle equipment, and sunlight-ignoring lighting.',
+        'Compares Real vs Ghost ideal consumption to isolate 8 deterministic energy ghosts: empty room ACs, continuous geysers, and idling projectors.',
       linkText: 'Open Control Center',
       href: '/dashboard',
-      icon: Cpu,
+      icon: Compass,
     },
     {
-      title: 'Eco AI Energy Coach',
+      title: 'Aura AI Energy Coach',
       description:
-        'AI advisor with offline fallback that gives ranked, quantified advice in Indian Rupees (₹) and kg CO₂ for admins, HODs, workers and students.',
-      linkText: 'Chat with Eco AI',
+        'Google Gemini-backed advisor with offline fallback generating ranked quantified advice in Indian Rupees (₹) and kg CO₂ across CFO, Eco, and Student personas.',
+      linkText: 'Chat with Aura AI',
       href: '/assistant',
       icon: Sparkles,
     },
@@ -34,17 +35,40 @@ export function InnovationCards() {
 
   return (
     <section style={{ margin: '80px 0 60px 0', position: 'relative', zIndex: 1 }}>
-      {/* Centered Eyebrow, Heading & Subtext */}
-      <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-        <div className="eyebrow-badge" style={{ marginBottom: '14px' }}>
-          <span>CORE INNOVATIONS</span>
+      {/* Centered Eyebrow, Heading & Subtext matching Screenshot 1 */}
+      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '14px' }}>
+          <span
+            style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 10px #38bdf8',
+              display: 'inline-block',
+            }}
+          />
         </div>
+
+        <div
+          style={{
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: '#7ee8d6',
+            marginBottom: '12px',
+          }}
+        >
+          CORE INNOVATIONS
+        </div>
+
         <h2
           style={{
-            fontSize: 'clamp(28px, 4.5vw, 44px)',
-            fontWeight: 200,
+            fontSize: 'clamp(30px, 4.6vw, 48px)',
+            fontWeight: 300,
             letterSpacing: '-0.035em',
-            margin: '0 0 10px 0',
+            margin: '0 0 14px 0',
             color: '#ffffff',
           }}
         >
@@ -53,7 +77,7 @@ export function InnovationCards() {
         <p
           style={{
             margin: '0 auto',
-            color: 'rgba(255, 255, 255, 0.45)',
+            color: 'rgba(255, 255, 255, 0.48)',
             fontSize: '15px',
             fontWeight: 300,
             maxWidth: '680px',
@@ -68,34 +92,37 @@ export function InnovationCards() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '24px',
+          marginBottom: '54px',
         }}
       >
         {innovations.map((item, i) => {
           const Icon = item.icon;
           return (
-            <div key={i} className="strata-card-wrapper">
+            <div key={i} className="strata-card-wrapper" style={{ minHeight: '320px' }}>
               <div className="strata-card-aura" />
               <div
                 className="strata-card-inner"
                 style={{
-                  padding: '32px 28px',
+                  padding: '36px 30px',
                   justifyContent: 'space-between',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
                 <div>
-                  <div className="strata-icon-tile" style={{ marginBottom: '22px' }}>
-                    <Icon size={20} />
+                  <div className="strata-icon-tile" style={{ marginBottom: '24px' }}>
+                    <Icon size={20} color="rgba(255, 255, 255, 0.9)" />
                   </div>
 
                   <h3
                     style={{
-                      fontSize: '18px',
-                      fontWeight: 400,
-                      letterSpacing: '-0.01em',
+                      fontSize: '20px',
+                      fontWeight: 500,
+                      letterSpacing: '-0.015em',
                       color: '#ffffff',
-                      margin: '0 0 12px 0',
+                      margin: '0 0 14px 0',
                     }}
                   >
                     {item.title}
@@ -103,18 +130,18 @@ export function InnovationCards() {
 
                   <p
                     style={{
-                      fontSize: '13px',
+                      fontSize: '13.5px',
                       fontWeight: 300,
                       lineHeight: 1.65,
-                      color: 'rgba(255, 255, 255, 0.45)',
-                      margin: '0 0 24px 0',
+                      color: 'rgba(255, 255, 255, 0.48)',
+                      margin: 0,
                     }}
                   >
                     {item.description}
                   </p>
                 </div>
 
-                <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <div style={{ paddingTop: '24px' }}>
                   <Link
                     href={item.href}
                     style={{
@@ -122,10 +149,10 @@ export function InnovationCards() {
                       alignItems: 'center',
                       gap: '8px',
                       fontSize: '13px',
-                      fontWeight: 400,
-                      color: '#c4b5fd',
+                      fontWeight: 500,
+                      color: '#7ee8d6',
                       textDecoration: 'none',
-                      transition: 'color 0.2s ease, gap 0.2s ease',
+                      transition: 'gap 0.2s ease, opacity 0.2s ease',
                     }}
                   >
                     <span>{item.linkText}</span>
@@ -137,6 +164,25 @@ export function InnovationCards() {
           );
         })}
       </div>
+
+      {/* Subfooter Quote matching Screenshot 1 */}
+      <div
+        style={{
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 300,
+          color: 'rgba(255, 255, 255, 0.4)',
+          letterSpacing: '0.02em',
+        }}
+      >
+        Built with ❤️ by{' '}
+        <strong style={{ color: '#ffffff', fontWeight: 500 }}>
+          {CAMPUS_CONFIG.teamName}, {CAMPUS_CONFIG.collegeShortName}
+        </strong>{' '}
+        &bull; [{CAMPUS_CONFIG.address}]
+      </div>
     </section>
   );
 }
+
+export default InnovationCards;
