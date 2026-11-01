@@ -33,12 +33,15 @@ export function PortalFieldCollection({
 
     let gl: WebGLRenderingContext | null = null;
     try {
-      gl = canvas.getContext('webgl', {
-        antialias: true,
-        alpha: false,
-        preserveDrawingBuffer: true,
-      });
-    } catch {
+      gl =
+        canvas.getContext('webgl', {
+          antialias: true,
+          alpha: false,
+          preserveDrawingBuffer: true,
+        }) ||
+        (canvas.getContext('experimental-webgl') as WebGLRenderingContext | null);
+    } catch (e) {
+      console.warn('WebGL not available:', e);
       gl = null;
     }
 
@@ -46,14 +49,12 @@ export function PortalFieldCollection({
 
     let animId: number;
     let dpr = 1;
-    let W = window.innerWidth;
-    let H = window.innerHeight;
 
     function resize() {
       if (!canvas || !gl) return;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = window.innerWidth;
-      H = window.innerHeight;
+      const W = window.innerWidth;
+      const H = window.innerHeight;
       canvas.width = Math.floor(W * dpr);
       canvas.height = Math.floor(H * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -68,7 +69,12 @@ export function PortalFieldCollection({
     `;
 
     const FS = `
+      #ifdef GL_FRAGMENT_PRECISION_HIGH
       precision highp float;
+      #else
+      precision mediump float;
+      #endif
+
       uniform vec2 u_res;
       uniform float u_time;
       uniform vec2 u_mouse;
@@ -241,13 +247,12 @@ export function PortalFieldCollection({
           float haze = exp(-pow((uv.y - 0.33) * 5.0, 2.0)) * 0.05;
           col += vec3(0.15, 0.10, 0.30) * haze;
 
+          col = max(col, vec3(0.0));
           col = pow(col, vec3(0.95));
 
-          // Apply saturation & brightness adjustments if provided
-          if (u_sat != 1.0 || u_bright != 1.0) {
-            float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
-            col = mix(vec3(lum), col, u_sat) * u_bright;
-          }
+          // Saturation and brightness adjustments
+          float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+          col = clamp(mix(vec3(lum), col, u_sat) * u_bright, 0.0, 1.0);
 
           gl_FragColor = vec4(col, 1.0);
       }
@@ -260,6 +265,7 @@ export function PortalFieldCollection({
       gl.shaderSource(s, src);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.warn('Shader compilation error:', gl.getShaderInfoLog(s));
         gl.deleteShader(s);
         return null;
       }
@@ -276,6 +282,7 @@ export function PortalFieldCollection({
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      console.warn('Program link error:', gl.getProgramInfoLog(prog));
       return;
     }
     gl.useProgram(prog);
