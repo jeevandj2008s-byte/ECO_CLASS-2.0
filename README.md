@@ -49,12 +49,15 @@ flowchart TD
         AUDIT["Immutable Audit Logging"]
     end
 
-    subgraph Frontend ["Placeholder UI / Digital Twin Web & PWA"]
+    subgraph Frontend ["Modern Dark UI / Digital Twin Web & PWA"]
+        UI_HERO["Modern Landing & Live Telemetry Hero"]
+        UI_CAROUSEL["9-Module Twin Horizontal Carousel"]
+        UI_HTU["Interactive How-To-Use Guide & FAQ"]
         UI_TWIN["3D Classroom Twin (CR-204)"]
         UI_MAP["Campus Topology Map"]
         UI_ENERGY["Energy Conservation Dashboard"]
         UI_HAZARD["Emergency Help Desk Banner"]
-        UI_SIM["Simulator Benchmarking Lab"]
+        UI_SIM["Simulator Benchmarking Lab & Debug Drawer"]
         UI_AI["AI Assistant Interactive Chat"]
     end
 
@@ -246,11 +249,15 @@ cp .env.example .env.local
 
 ### 3. Run Test Suite
 ```bash
-# Runs all 20 unit and integration tests (Automation, RLS, Emergency, Simulator, AI Tools)
+# Runs all 25 unit and integration tests across 6 test suites
+# (UI Components & Campus Config, Automation Engine, RLS Roles, Emergency Hazard, Simulator, AI Tools)
 npm test
 
 # Check TypeScript compiler
 npm run typecheck
+
+# Production build verification
+npm run build
 ```
 
 ### 4. Start Next.js Development Server
@@ -258,6 +265,26 @@ npm run typecheck
 npm run dev
 # Open http://localhost:3000 in your browser
 ```
+
+---
+
+## 🎨 UI & Operational Routing Architecture
+
+| Route | Module / Feature | Description |
+|---|---|---|
+| `/` | **Landing Page** | Centered high-impact Hero, 4 live telemetry counters, 9-module horizontal scroll carousel, 5-step operational stepper, Net-Zero innovation cards |
+| `/how-to-use` | **Operational Guide** | Step-by-step role guides (Admin, HOD, Worker, Student), searchable FAQ accordion, keyboard shortcut index |
+| `/dashboard` (or `/energy`) | **Command Center** | Real-time campus load (kW), carbon avoidance (kg CO₂e), historical trends, and CSV report export |
+| `/campus-map` (or `/map`) | **Campus Topology Map** | Digital twin of campus blocks (Turing, Tesla, Raman, etc.) with department heatmaps |
+| `/classroom-3d` (or `/classroom/c1...`) | **3D Classroom Twin** | Row-by-row bench spatial lighting & thermal fan state with real-time seat placement simulator |
+| `/vision-lab` | **Vision Lab** | Edge AI camera pipeline, 512-dim face embeddings, privacy consent toggles |
+| `/automation` | **Automation Rules** | Configurable lux target formulas, temperature thresholds, occupancy timers, failsafe rules |
+| `/simulator` | **What-If Simulator** | 5 real-time electrical & occupancy scenarios (Short Circuit, Class in Session, Evening Study, Empty Room, Heatwave) |
+| `/helpdesk` (or `/incidents`) | **Emergency Help Desk** | Instant hazard notifications, automated circuit trips, triage workflow (Acknowledge, Dispatch, Resolve) |
+| `/assistant` | **Eco AI Assistant** | Claude 3.5 Sonnet server-side tool calling with explanation of automation decisions |
+| `/admin` | **User & Roles Console** | Manage role promotions (Admin, HOD, Worker, User), invite allowlists, audit logs |
+
+> **Pro Tip:** Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> anywhere in the app to open the **Admin Simulator & Debug Drawer** to trigger electrical faults or test edge scenarios instantaneously.
 
 ### 5. Start Python Face Recognition Service (Optional)
 ```bash
