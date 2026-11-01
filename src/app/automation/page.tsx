@@ -47,16 +47,16 @@ export default function AutomationPage() {
   };
 
   return (
-    <div style={{ maxWidth: '1100px', margin: '40px auto', padding: '0 20px' }}>
+    <div style={{ maxWidth: '1100px', margin: '40px auto', padding: '0 20px', position: 'relative', zIndex: 1 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <div className="eyebrow-badge" style={{ marginBottom: '8px' }}>
+          <div className="eyebrow-badge" style={{ marginBottom: '10px' }}>
             <span>AUTONOMOUS IOT ENGINE</span>
           </div>
-          <h1 style={{ margin: '0 0 6px 0', fontSize: '32px', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ margin: '0 0 6px 0', fontSize: '32px', fontWeight: 200, letterSpacing: '-0.025em', color: '#fff' }}>
             Automation &amp; Smart Switches
           </h1>
-          <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px' }}>
+          <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '14px', fontWeight: 300 }}>
             Zero-latency daylight harvesting, bench-row dimming, and comfort cooling coordination
           </p>
         </div>
@@ -64,28 +64,33 @@ export default function AutomationPage() {
         <button
           onClick={handleTriggerTick}
           disabled={ticking}
+          className="strata-btn-primary"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
             padding: '12px 22px',
-            background: 'linear-gradient(135deg, #6d4fe0, #7c3aed)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 'var(--radius-pill)',
-            fontSize: '14px',
-            fontWeight: 700,
+            fontSize: '13px',
+            fontWeight: 500,
             cursor: ticking ? 'not-allowed' : 'pointer',
-            boxShadow: 'var(--glow-violet)',
+            opacity: ticking ? 0.7 : 1,
           }}
         >
-          <RefreshCw size={16} className={ticking ? 'spin' : ''} />
+          <RefreshCw size={15} className={ticking ? 'spin' : ''} />
           <span>{ticking ? 'Evaluating Engine...' : 'Run Automation Tick'}</span>
         </button>
       </div>
 
       {statusMsg && (
-        <div style={{ padding: '12px 16px', background: 'var(--bg-surface)', border: '1px solid var(--border-mint)', color: 'var(--accent-mint)', borderRadius: '8px', marginBottom: '24px', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
+        <div
+          style={{
+            padding: '12px 18px',
+            background: 'rgba(124, 58, 237, 0.12)',
+            border: '1px solid rgba(124, 58, 237, 0.3)',
+            color: '#c4b5fd',
+            borderRadius: '10px',
+            marginBottom: '24px',
+            fontSize: '13px',
+            fontFamily: 'var(--font-mono)',
+          }}
+        >
           {statusMsg}
         </div>
       )}
@@ -93,95 +98,101 @@ export default function AutomationPage() {
       {/* Two Column Layout */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
         {/* Active Rules Card */}
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-card)', padding: '28px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>Active Automation Profile</h2>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', padding: '3px 8px', borderRadius: '4px', background: 'var(--accent-mint-subtle)', color: 'var(--accent-mint)', border: '1px solid var(--border-mint)' }}>
-              v{rule?.version || 1} ACTIVE
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '13px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Target Study Illuminance:</span>
-              <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{rule?.target_lux || 400} Lux</strong>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#fff', margin: 0 }}>Active Automation Profile</h2>
+              <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', padding: '3px 9px', borderRadius: '4px', background: 'rgba(124, 58, 237, 0.14)', color: '#c4b5fd', border: '1px solid rgba(124, 58, 237, 0.3)', fontWeight: 500 }}>
+                v{rule?.version || 1} ACTIVE
+              </span>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Lux Hysteresis Anti-Flicker:</span>
-              <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>&plusmn;{rule?.lux_hysteresis || 30} Lux</strong>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '13px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Target Study Illuminance:</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{rule?.target_lux || 400} Lux</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Lux Hysteresis Anti-Flicker:</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>&plusmn;{rule?.lux_hysteresis || 30} Lux</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Unoccupied Row Safety Dim:</span>
+                <strong style={{ color: '#c4b5fd', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{rule?.empty_dim_percent || 10}% Standby</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Fan Cooling Activation:</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>&gt;{rule?.temp_fan_threshold || 26.5} &deg;C</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Empty Room Grace Period:</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{rule?.empty_grace_period_seconds || 300} seconds (5m)</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Timetable Lookahead:</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{rule?.timetable_lookahead_seconds || 600} seconds (10m)</strong>
+              </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Unoccupied Row Safety Dim:</span>
-              <strong style={{ color: 'var(--accent-mint)', fontFamily: 'var(--font-mono)' }}>{rule?.empty_dim_percent || 10}% Standby</strong>
+            <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+              <Link
+                href="/admin"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '13px',
+                  color: '#c4b5fd',
+                  textDecoration: 'none',
+                  fontWeight: 400,
+                }}
+              >
+                <span>Edit thresholds in Admin Settings &rarr;</span>
+              </Link>
             </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Fan Cooling Activation:</span>
-              <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>&gt;{rule?.temp_fan_threshold || 26.5} &deg;C</strong>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Empty Room Grace Period:</span>
-              <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{rule?.empty_grace_period_seconds || 300} seconds (5m)</strong>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Timetable Lookahead:</span>
-              <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{rule?.timetable_lookahead_seconds || 600} seconds (10m)</strong>
-            </div>
-          </div>
-
-          <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>
-            <Link
-              href="/admin"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '13px',
-                color: 'var(--accent-mint)',
-                textDecoration: 'none',
-                fontWeight: 600,
-              }}
-            >
-              <span>Edit thresholds in Admin Settings &rarr;</span>
-            </Link>
           </div>
         </div>
 
         {/* Explainable Decision Feed */}
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-card)', padding: '28px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: '0 0 16px 0' }}>
-            Explainable Decision Feed
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {events.map((evt) => (
-              <div
-                key={evt.id}
-                style={{
-                  background: 'var(--bg-surface-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '14px',
-                  fontSize: '12px',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ color: 'var(--accent-mint)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
-                    {evt.event_type}
-                  </span>
-                  <span style={{ color: 'var(--text-muted)' }}>{evt.classroom_name}</span>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#fff', margin: '0 0 18px 0' }}>
+              Explainable Decision Feed
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {events.map((evt) => (
+                <div
+                  key={evt.id}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    fontSize: '12px',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ color: '#c4b5fd', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
+                      {evt.event_type}
+                    </span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>{evt.classroom_name}</span>
+                  </div>
+                  <div style={{ color: 'rgba(255, 255, 255, 0.85)', lineHeight: 1.55, marginBottom: '8px', fontWeight: 300 }}>
+                    {evt.explanation}
+                  </div>
+                  <div style={{ color: 'rgba(255, 255, 255, 0.35)', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
+                    Action: {JSON.stringify(evt.actions_taken)}
+                  </div>
                 </div>
-                <div style={{ color: '#e2e8f0', lineHeight: 1.5, marginBottom: '6px' }}>
-                  {evt.explanation}
-                </div>
-                <div style={{ color: 'var(--text-muted)', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
-                  Action: {JSON.stringify(evt.actions_taken)}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -60,161 +60,175 @@ export default function AdminPage() {
   };
 
   return (
-    <div style={{ margin: '32px 0' }}>
-      <div style={{ marginBottom: '28px' }}>
-        <div className="eyebrow-badge" style={{ marginBottom: '8px' }}>
+    <div style={{ margin: '40px 0', position: 'relative', zIndex: 1 }}>
+      <div style={{ marginBottom: '32px' }}>
+        <div className="eyebrow-badge" style={{ marginBottom: '10px' }}>
           <span>ADMINISTRATION &bull; ACCESS CONTROL</span>
         </div>
-        <h1 style={{ margin: '0 0 6px 0', fontSize: '30px', fontWeight: 800, color: '#fff' }}>
+        <h1 style={{ margin: '0 0 6px 0', fontSize: '32px', fontWeight: 200, letterSpacing: '-0.025em', color: '#fff' }}>
           Campus Policy &amp; User Governance
         </h1>
-        <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px' }}>
+        <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '14px', fontWeight: 300 }}>
           Manage global automation thresholds, staff role delegation, and pre-approved Google login accounts.
         </p>
       </div>
 
       {msg && (
-        <div style={{ padding: '12px 16px', background: 'var(--bg-surface)', border: '1px solid var(--border-mint)', color: 'var(--accent-mint)', borderRadius: '8px', marginBottom: '24px', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
+        <div
+          style={{
+            padding: '12px 18px',
+            background: 'rgba(124, 58, 237, 0.12)',
+            border: '1px solid rgba(124, 58, 237, 0.3)',
+            color: '#c4b5fd',
+            borderRadius: '10px',
+            marginBottom: '24px',
+            fontSize: '13px',
+            fontFamily: 'var(--font-mono)',
+          }}
+        >
           {msg}
         </div>
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px' }}>
         {/* Automation Thresholds Form */}
-        <div style={{ background: 'var(--bg-surface)', padding: '28px', borderRadius: 'var(--radius-card)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>Campus Automation Rules</h2>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--accent-mint)' }}>
-              Profile v{rule.version || 1}
-            </span>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#fff', margin: 0 }}>Campus Automation Rules</h2>
+              <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#c4b5fd' }}>
+                Profile v{rule.version || 1}
+              </span>
+            </div>
+
+            <form onSubmit={handleSaveRule}>
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 400, color: 'rgba(255, 255, 255, 0.55)', marginBottom: '6px' }}>
+                  Study Target Brightness (Lux):
+                </label>
+                <input
+                  type="number"
+                  value={rule.target_lux || 400}
+                  onChange={(e) => setRule({ ...rule, target_lux: e.target.value })}
+                  className="strata-input"
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 400, color: 'rgba(255, 255, 255, 0.55)', marginBottom: '6px' }}>
+                  Lux Hysteresis Anti-Flicker Band (Lux):
+                </label>
+                <input
+                  type="number"
+                  value={rule.lux_hysteresis || 30}
+                  onChange={(e) => setRule({ ...rule, lux_hysteresis: e.target.value })}
+                  className="strata-input"
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 400, color: 'rgba(255, 255, 255, 0.55)', marginBottom: '6px' }}>
+                  Fan Cooling Activation Threshold (°C):
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={rule.temp_fan_threshold || 26.5}
+                  onChange={(e) => setRule({ ...rule, temp_fan_threshold: e.target.value })}
+                  className="strata-input"
+                />
+              </div>
+
+              <div style={{ marginBottom: '22px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 400, color: 'rgba(255, 255, 255, 0.55)', marginBottom: '6px' }}>
+                  Empty Room Grace Period (Seconds):
+                </label>
+                <input
+                  type="number"
+                  value={rule.empty_grace_period_seconds || 300}
+                  onChange={(e) => setRule({ ...rule, empty_grace_period_seconds: e.target.value })}
+                  className="strata-input"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="strata-btn-primary"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: 'var(--radius-pill)',
+                }}
+              >
+                Update Policy Thresholds
+              </button>
+            </form>
           </div>
-
-          <form onSubmit={handleSaveRule}>
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                Study Target Brightness (Lux):
-              </label>
-              <input
-                type="number"
-                value={rule.target_lux || 400}
-                onChange={(e) => setRule({ ...rule, target_lux: e.target.value })}
-                style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                Lux Hysteresis Anti-Flicker Band (Lux):
-              </label>
-              <input
-                type="number"
-                value={rule.lux_hysteresis || 30}
-                onChange={(e) => setRule({ ...rule, lux_hysteresis: e.target.value })}
-                style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                Fan Cooling Activation Threshold (°C):
-              </label>
-              <input
-                type="number"
-                step="0.1"
-                value={rule.temp_fan_threshold || 26.5}
-                onChange={(e) => setRule({ ...rule, temp_fan_threshold: e.target.value })}
-                style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                Empty Room Grace Period (Seconds):
-              </label>
-              <input
-                type="number"
-                value={rule.empty_grace_period_seconds || 300}
-                onChange={(e) => setRule({ ...rule, empty_grace_period_seconds: e.target.value })}
-                style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '12px',
-                background: 'var(--accent-violet)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 'var(--radius-pill)',
-                fontWeight: 700,
-                fontSize: '13px',
-                cursor: 'pointer',
-                boxShadow: 'var(--glow-violet)',
-              }}
-            >
-              Update Policy Thresholds
-            </button>
-          </form>
         </div>
 
         {/* Email Allowlist Form */}
-        <div style={{ background: 'var(--bg-surface)', padding: '28px', borderRadius: 'var(--radius-card)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: '0 0 8px 0' }}>Admin Email Allowlist</h2>
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 20px 0', lineHeight: 1.5 }}>
-            Pre-approved staff emails automatically receive elevated roles on Google Workspace sign-in.
-          </p>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#fff', margin: '0 0 8px 0' }}>Admin Email Allowlist</h2>
+            <p style={{ fontSize: '13px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.45)', margin: '0 0 20px 0', lineHeight: 1.5 }}>
+              Pre-approved staff emails automatically receive elevated roles on Google Workspace sign-in.
+            </p>
 
-          <form onSubmit={handleAddAllowlist} style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
-            <input
-              type="email"
-              placeholder="dean.engineering@bit-bangalore.edu.in"
-              value={allowEmail}
-              onChange={(e) => setAllowEmail(e.target.value)}
-              required
-              style={{ flex: 1, minWidth: '180px', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-            />
-            <select
-              value={allowRole}
-              onChange={(e) => setAllowRole(e.target.value)}
-              style={{ padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-medium)', background: 'var(--bg-surface-elevated)', color: '#fff', fontSize: '13px' }}
-            >
-              <option value="worker">Worker</option>
-              <option value="hod">HOD</option>
-              <option value="admin">Admin</option>
-            </select>
-            <button
-              type="submit"
-              style={{ padding: '10px 18px', background: 'var(--accent-mint)', color: '#0b0b10', border: 'none', borderRadius: '6px', fontWeight: 700, fontSize: '13px', cursor: 'pointer' }}
-            >
-              Authorize
-            </button>
-          </form>
+            <form onSubmit={handleAddAllowlist} style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+              <input
+                type="email"
+                placeholder="dean.engineering@bit-bangalore.edu.in"
+                value={allowEmail}
+                onChange={(e) => setAllowEmail(e.target.value)}
+                required
+                className="strata-input"
+                style={{ flex: 1, minWidth: '180px' }}
+              />
+              <select
+                value={allowRole}
+                onChange={(e) => setAllowRole(e.target.value)}
+                className="strata-input"
+                style={{ width: 'auto' }}
+              >
+                <option value="worker">Worker</option>
+                <option value="hod">HOD</option>
+                <option value="admin">Admin</option>
+              </select>
+              <button
+                type="submit"
+                className="strata-btn-primary"
+                style={{ padding: '10px 18px', fontSize: '13px' }}
+              >
+                Authorize
+              </button>
+            </form>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', fontSize: '12px', textAlign: 'left', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '8px', background: 'transparent' }}>Email</th>
-                  <th style={{ padding: '8px', background: 'transparent' }}>Role</th>
-                  <th style={{ padding: '8px', background: 'transparent' }}>Department</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allowlist.map((u, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
-                    <td style={{ padding: '10px 8px', fontFamily: 'var(--font-mono)' }}>{u.email}</td>
-                    <td style={{ padding: '10px 8px' }}>
-                      <span style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', padding: '2px 6px', borderRadius: '4px', background: 'var(--accent-violet-subtle)', color: '#c4b5fd', border: '1px solid var(--border-violet)', textTransform: 'uppercase', fontWeight: 700 }}>
-                        {u.role}
-                      </span>
-                    </td>
-                    <td style={{ padding: '10px 8px', color: 'var(--text-secondary)' }}>{u.dept}</td>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', fontSize: '12px', textAlign: 'left', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', color: 'rgba(255, 255, 255, 0.4)' }}>
+                    <th style={{ padding: '10px 8px', background: 'transparent', fontWeight: 400 }}>Email</th>
+                    <th style={{ padding: '10px 8px', background: 'transparent', fontWeight: 400 }}>Role</th>
+                    <th style={{ padding: '10px 8px', background: 'transparent', fontWeight: 400 }}>Department</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {allowlist.map((u, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', color: 'rgba(255, 255, 255, 0.85)' }}>
+                      <td style={{ padding: '12px 8px', fontFamily: 'var(--font-mono)' }}>{u.email}</td>
+                      <td style={{ padding: '12px 8px' }}>
+                        <span style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', padding: '2px 8px', borderRadius: '4px', background: 'rgba(124, 58, 237, 0.14)', color: '#c4b5fd', border: '1px solid rgba(124, 58, 237, 0.3)', textTransform: 'uppercase', fontWeight: 500 }}>
+                          {u.role}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px 8px', color: 'rgba(255, 255, 255, 0.45)', fontWeight: 300 }}>{u.dept}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

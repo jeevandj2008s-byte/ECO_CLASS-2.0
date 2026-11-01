@@ -71,157 +71,211 @@ export default function SimulatorPage() {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: '24px' }}>
-        <h2 style={{ margin: '0 0 4px 0' }}>🧪 Smart Classroom Hardware Simulator</h2>
-        <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
+    <div style={{ margin: '40px 0', position: 'relative', zIndex: 1 }}>
+      <div style={{ marginBottom: '32px' }}>
+        <div className="eyebrow-badge" style={{ marginBottom: '10px' }}>
+          <span>HARDWARE-IN-THE-LOOP SIMULATOR</span>
+        </div>
+        <h1 style={{ margin: '0 0 6px 0', fontSize: '32px', fontWeight: 200, letterSpacing: '-0.025em', color: '#fff' }}>
+          🧪 Smart Classroom Hardware Simulator
+        </h1>
+        <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '14px', fontWeight: 300 }}>
           Emulates occupancy, ambient lux, temperature, ceiling fans, and power meter telemetry without physical hardware.
         </p>
       </div>
 
       {msg && (
-        <div style={{ padding: '12px', background: '#ecfdf5', color: '#065f46', borderRadius: '6px', marginBottom: '20px', fontSize: '14px' }}>
+        <div
+          style={{
+            padding: '12px 18px',
+            background: 'rgba(124, 58, 237, 0.12)',
+            border: '1px solid rgba(124, 58, 237, 0.3)',
+            color: '#c4b5fd',
+            borderRadius: '10px',
+            marginBottom: '24px',
+            fontSize: '13px',
+            fontFamily: 'var(--font-mono)',
+          }}
+        >
           {msg}
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px' }}>
         {/* Preset Scenarios Card */}
-        <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>1. Preset Table-Driven Scenarios</h3>
-          <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px 0' }}>
-            Choose from the key automation benchmarks:
-          </p>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '16px', fontWeight: 400, color: '#fff' }}>
+              1. Preset Table-Driven Scenarios
+            </h3>
+            <p style={{ fontSize: '13px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.45)', margin: '0 0 20px 0', lineHeight: 1.5 }}>
+              Choose from the key automation benchmarks:
+            </p>
 
-          <div style={{ marginBottom: '16px' }}>
-            {scenarios.map((sc) => (
-              <label
-                key={sc.code}
-                style={{
-                  display: 'block',
-                  padding: '10px',
-                  borderRadius: '6px',
-                  background: selectedScenario === sc.code ? '#f0fdf4' : '#fff',
-                  border: `1px solid ${selectedScenario === sc.code ? '#22c55e' : '#e2e8f0'}`,
-                  marginBottom: '8px',
-                  cursor: 'pointer',
-                }}
-              >
-                <input
-                  type="radio"
-                  name="scenario"
-                  value={sc.code}
-                  checked={selectedScenario === sc.code}
-                  onChange={(e) => setSelectedScenario(e.target.value)}
-                  style={{ marginRight: '8px' }}
-                />
-                <strong>{sc.name}</strong>
-                <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px', paddingLeft: '22px' }}>
-                  {sc.description}
-                </div>
-              </label>
-            ))}
+            <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {scenarios.map((sc) => {
+                const isSelected = selectedScenario === sc.code;
+                return (
+                  <label
+                    key={sc.code}
+                    style={{
+                      display: 'block',
+                      padding: '12px 14px',
+                      borderRadius: '10px',
+                      background: isSelected ? 'rgba(124, 58, 237, 0.16)' : 'rgba(255, 255, 255, 0.03)',
+                      border: `1px solid ${isSelected ? 'rgba(139, 92, 246, 0.5)' : 'rgba(255, 255, 255, 0.08)'}`,
+                      cursor: 'pointer',
+                      transition: 'all 0.18s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <input
+                        type="radio"
+                        name="scenario"
+                        value={sc.code}
+                        checked={isSelected}
+                        onChange={(e) => setSelectedScenario(e.target.value)}
+                        style={{ accentColor: '#8b5cf6' }}
+                      />
+                      <strong style={{ fontSize: '13px', fontWeight: 500, color: isSelected ? '#ddd6fe' : '#ffffff' }}>
+                        {sc.name}
+                      </strong>
+                    </div>
+                    <div style={{ fontSize: '12px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.45)', marginTop: '4px', paddingLeft: '24px', lineHeight: 1.5 }}>
+                      {sc.description}
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={handleApplyScenario}
+              className="strata-btn-primary"
+              style={{ width: '100%', padding: '13px' }}
+            >
+              Apply Scenario &amp; Run Engine
+            </button>
           </div>
-
-          <button
-            onClick={handleApplyScenario}
-            style={{ width: '100%', padding: '12px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold' }}
-          >
-            Apply Scenario &amp; Run Engine
-          </button>
         </div>
 
         {/* Custom Telemetry Injection */}
-        <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>2. Live Sensor Injection Sliders</h3>
-          <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px 0' }}>
-            Adjust physical values to test daylight harvesting and thermal comfort scaling.
-          </p>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '16px', fontWeight: 400, color: '#fff' }}>
+              2. Live Sensor Injection Sliders
+            </h3>
+            <p style={{ fontSize: '13px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.45)', margin: '0 0 20px 0', lineHeight: 1.5 }}>
+              Adjust physical values to test daylight harvesting and thermal comfort scaling.
+            </p>
 
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '4px' }}>
-              <span>Ambient Daylight (Lux):</span>
-              <strong>{lux} Lux</strong>
+            <div style={{ marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300 }}>Ambient Daylight (Lux):</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{lux} Lux</strong>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value={lux}
+                onChange={(e) => setLux(Number(e.target.value))}
+                style={{ width: '100%', accentColor: '#8b5cf6' }}
+              />
             </div>
-            <input
-              type="range"
-              min="0"
-              max="1000"
-              value={lux}
-              onChange={(e) => setLux(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
+
+            <div style={{ marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300 }}>Room Temperature (°C):</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{temp} °C</strong>
+              </div>
+              <input
+                type="range"
+                min="18"
+                max="40"
+                step="0.5"
+                value={temp}
+                onChange={(e) => setTemp(Number(e.target.value))}
+                style={{ width: '100%', accentColor: '#8b5cf6' }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300 }}>Relative Humidity (%):</span>
+                <strong style={{ color: '#fff', fontFamily: 'var(--font-mono)' }}>{humidity} %</strong>
+              </div>
+              <input
+                type="range"
+                min="20"
+                max="95"
+                value={humidity}
+                onChange={(e) => setHumidity(Number(e.target.value))}
+                style={{ width: '100%', accentColor: '#8b5cf6' }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300 }}>Circuit Current Draw (Amps):</span>
+                <strong style={{ color: currentAmps > 25 ? '#fca5a5' : '#c4b5fd', fontFamily: 'var(--font-mono)' }}>
+                  {currentAmps} A
+                </strong>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="0.5"
+                value={currentAmps}
+                onChange={(e) => setCurrentAmps(Number(e.target.value))}
+                style={{ width: '100%', accentColor: currentAmps > 25 ? '#ef4444' : '#8b5cf6' }}
+              />
+              <div style={{ fontSize: '11px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.35)', marginTop: '4px' }}>
+                &gt;25A triggers overcurrent; &gt;50A triggers immediate short-circuit trip
+              </div>
+            </div>
+
+            <button
+              onClick={handleManualInject}
+              className="strata-btn-primary"
+              style={{ width: '100%', padding: '13px' }}
+            >
+              Inject Telemetry &amp; Evaluate
+            </button>
           </div>
-
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '4px' }}>
-              <span>Room Temperature (°C):</span>
-              <strong>{temp} °C</strong>
-            </div>
-            <input
-              type="range"
-              min="18"
-              max="40"
-              step="0.5"
-              value={temp}
-              onChange={(e) => setTemp(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '4px' }}>
-              <span>Relative Humidity (%):</span>
-              <strong>{humidity} %</strong>
-            </div>
-            <input
-              type="range"
-              min="20"
-              max="95"
-              value={humidity}
-              onChange={(e) => setHumidity(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '4px' }}>
-              <span>Circuit Current Draw (Amps):</span>
-              <strong style={{ color: currentAmps > 25 ? '#dc2626' : '#0f172a' }}>{currentAmps} A</strong>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="0.5"
-              value={currentAmps}
-              onChange={(e) => setCurrentAmps(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-            <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
-              &gt;25A triggers overcurrent; &gt;50A triggers immediate short-circuit trip
-            </div>
-          </div>
-
-          <button
-            onClick={handleManualInject}
-            style={{ width: '100%', padding: '12px', background: '#0f172a', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold' }}
-          >
-            Inject Telemetry &amp; Evaluate
-          </button>
         </div>
       </div>
 
       {/* Decisions Output */}
       {lastDecision && (
-        <div style={{ marginTop: '24px', background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Automation Engine Decisions Log</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {lastDecision.actions?.map((act: any) => (
-              <div key={act.deviceId} style={{ padding: '8px 12px', background: '#f8fafc', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '13px' }}>
-                <strong>{act.deviceType.toUpperCase()}:</strong> {act.powerOn ? `ON (Brightness: ${act.brightnessPercent}%, Speed: ${act.fanSpeed})` : 'OFF'} &bull; <span style={{ color: '#64748b' }}>{act.reason}</span>
-              </div>
-            ))}
+        <div className="strata-card-wrapper" style={{ marginTop: '28px' }}>
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '24px' }}>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: 400, color: '#fff' }}>
+              Automation Engine Decisions Log
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {lastDecision.actions?.map((act: any) => (
+                <div
+                  key={act.deviceId}
+                  style={{
+                    padding: '10px 14px',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    fontSize: '13px',
+                    color: 'rgba(255, 255, 255, 0.85)',
+                  }}
+                >
+                  <strong style={{ color: '#c4b5fd', fontFamily: 'var(--font-mono)' }}>{act.deviceType.toUpperCase()}:</strong>{' '}
+                  {act.powerOn ? `ON (Brightness: ${act.brightnessPercent}%, Speed: ${act.fanSpeed})` : 'OFF'} &bull;{' '}
+                  <span style={{ color: 'rgba(255, 255, 255, 0.45)' }}>{act.reason}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

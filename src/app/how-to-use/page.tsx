@@ -61,7 +61,7 @@ export default function HowToUsePage() {
   };
 
   return (
-    <div style={{ maxWidth: '960px', margin: '40px auto', padding: '0 20px' }}>
+    <div style={{ maxWidth: '960px', margin: '40px auto', padding: '0 20px', position: 'relative', zIndex: 1 }}>
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '48px' }}>
         <div className="eyebrow-badge" style={{ marginBottom: '14px' }}>
@@ -70,7 +70,7 @@ export default function HowToUsePage() {
         <h1
           style={{
             fontSize: 'clamp(32px, 5vw, 52px)',
-            fontWeight: 800,
+            fontWeight: 200,
             letterSpacing: '-0.03em',
             margin: '0 0 16px 0',
             color: '#fff',
@@ -78,129 +78,122 @@ export default function HowToUsePage() {
         >
           How to Use Eco Class
         </h1>
-        <p style={{ fontSize: '16px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
+        <p style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.45)', maxWidth: '640px', margin: '0 auto', lineHeight: '1.6' }}>
           Official manual for administrators, faculty HODs, electricians, and students at{' '}
-          <strong style={{ color: '#fff' }}>{CAMPUS_CONFIG.collegeName}</strong>.
+          <strong style={{ color: '#fff', fontWeight: 500 }}>{CAMPUS_CONFIG.collegeName}</strong>.
         </p>
       </div>
 
       {/* Playbook Cards */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '60px' }}>
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '28px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--accent-mint)', margin: '0 0 12px 0' }}>
-            1. Sign In &amp; Role-Based Access
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', margin: '0 0 16px 0' }}>
-            Eco Class uses Google Workspace OAuth. Sign in with your registered college email (e.g. <code>@bit-bangalore.edu.in</code>).
-            If your email is on the pre-approved administrator allowlist, your role (Admin, HOD, Worker) is automatically provisioned via database triggers.
-            Unregistered users receive view-only Student/Guest privileges.
-          </p>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <Link
-              href="/login"
-              style={{
-                fontSize: '13px',
-                fontWeight: 700,
-                color: '#fff',
-                background: 'var(--accent-violet)',
-                padding: '8px 16px',
-                borderRadius: 'var(--radius-pill)',
-                textDecoration: 'none',
-              }}
-            >
-              Go to Sign In &rarr;
-            </Link>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#c4b5fd', margin: '0 0 12px 0' }}>
+              1. Sign In &amp; Role-Based Access
+            </h2>
+            <p style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.5)', margin: '0 0 18px 0' }}>
+              Eco Class uses Google Workspace OAuth. Sign in with your registered college email (e.g. <code>@bit-bangalore.edu.in</code>).
+              If your email is on the pre-approved administrator allowlist, your role (Admin, HOD, Worker) is automatically provisioned via database triggers.
+              Unregistered users receive view-only Student/Guest privileges.
+            </p>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <Link href="/login" className="strata-btn-primary" style={{ padding: '8px 18px', fontSize: '13px' }}>
+                Go to Sign In &rarr;
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '28px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--accent-mint)', margin: '0 0 12px 0' }}>
-            2. Campus Map &amp; 3D Digital Twin Navigation
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', margin: '0 0 16px 0' }}>
-            Select any academic block on the Campus Map to view live power meters. Click through to a classroom (such as CR-204 in Turing Block)
-            to inspect the 3D seating twin. You can see student seating coordinates in real time, view live watts per bench-row fixture,
-            and inspect the power flow tree from the transformer down to individual actuators.
-          </p>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <Link
-              href="/campus-map"
-              style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                color: 'var(--accent-mint)',
-                textDecoration: 'none',
-              }}
-            >
-              Open Campus Map &rarr;
-            </Link>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#c4b5fd', margin: '0 0 12px 0' }}>
+              2. Campus Map &amp; 3D Digital Twin Navigation
+            </h2>
+            <p style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.5)', margin: '0 0 18px 0' }}>
+              Select any academic block on the Campus Map to view live power meters. Click through to a classroom (such as CR-204 in Turing Block)
+              to inspect the 3D seating twin. You can see student seating coordinates in real time, view live watts per bench-row fixture,
+              and inspect the power flow tree from the transformer down to individual actuators.
+            </p>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <Link href="/campus-map" className="strata-btn-secondary" style={{ padding: '8px 18px', fontSize: '13px', color: '#c4b5fd' }}>
+                Open Campus Map &rarr;
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '28px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--accent-mint)', margin: '0 0 12px 0' }}>
-            3. Automated Energy Optimization vs Manual Overrides
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', margin: '0 0 16px 0' }}>
-            Classroom devices operate in <strong>Auto Mode</strong> by default. The engine continuously samples ambient lux to harvest daylight
-            and reads temperature/humidity to scale ceiling fans. If special event lighting is needed, staff can apply a manual override
-            with an expiry window. The engine respects technician overrides and resumes automatic energy-saving once the timer expires.
-          </p>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#c4b5fd', margin: '0 0 12px 0' }}>
+              3. Automated Energy Optimization vs Manual Overrides
+            </h2>
+            <p style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.5)', margin: 0 }}>
+              Classroom devices operate in <strong>Auto Mode</strong> by default. The engine continuously samples ambient lux to harvest daylight
+              and reads temperature/humidity to scale ceiling fans. If special event lighting is needed, staff can apply a manual override
+              with an expiry window. The engine respects technician overrides and resumes automatic energy-saving once the timer expires.
+            </p>
+          </div>
         </div>
 
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '28px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--accent-mint)', margin: '0 0 12px 0' }}>
-            4. Emergency Incident Help Desk
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>
-            In the event of an electrical hazard or burning smell, any staff member can trip circuit power using the Emergency Help Desk button.
-            Automatic breaker trip events broadcast alerts directly to facilities technicians, who must acknowledge the alert, conduct on-site
-            investigations, and record resolution notes before power can be restored.
-          </p>
+        <div className="strata-card-wrapper">
+          <div className="strata-card-aura" />
+          <div className="strata-card-inner" style={{ padding: '28px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#c4b5fd', margin: '0 0 12px 0' }}>
+              4. Emergency Incident Help Desk
+            </h2>
+            <p style={{ fontSize: '14px', fontWeight: 300, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.5)', margin: 0 }}>
+              In the event of an electrical hazard or burning smell, any staff member can trip circuit power using the Emergency Help Desk button.
+              Automatic breaker trip events broadcast alerts directly to facilities technicians, who must acknowledge the alert, conduct on-site
+              investigations, and record resolution notes before power can be restored.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Keyboard Shortcuts Box */}
-      <div
-        style={{
-          background: 'rgba(109, 79, 224, 0.1)',
-          border: '1px solid var(--border-violet)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '24px',
-          marginBottom: '60px',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-          <Keyboard size={20} color="#c4b5fd" />
-          <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#fff' }}>
-            Keyboard Shortcuts &amp; Accessibility
-          </h3>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', fontSize: '13px' }}>
-          <div>
-            <kbd style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-medium)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: 'var(--accent-mint)', marginRight: '8px' }}>
-              Ctrl + Shift + D
-            </kbd>
-            <span>Toggle Sim Debug Console</span>
+      <div className="strata-card-wrapper" style={{ marginBottom: '60px' }}>
+        <div className="strata-card-aura" />
+        <div
+          className="strata-card-inner"
+          style={{
+            padding: '28px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+            <Keyboard size={18} color="#a78bfa" />
+            <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 400, color: '#fff' }}>
+              Keyboard Shortcuts &amp; Accessibility
+            </h3>
           </div>
-          <div>
-            <kbd style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-medium)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: 'var(--accent-mint)', marginRight: '8px' }}>
-              &larr; / &rarr;
-            </kbd>
-            <span>Scroll Module Carousel</span>
-          </div>
-          <div>
-            <kbd style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-medium)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: 'var(--accent-mint)', marginRight: '8px' }}>
-              Tab / Shift+Tab
-            </kbd>
-            <span>Keyboard Focus Ring Navigation</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', fontSize: '13px' }}>
+            <div>
+              <kbd style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: '#c4b5fd', marginRight: '8px' }}>
+                Ctrl + Shift + D
+              </kbd>
+              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 300 }}>Toggle Sim Debug Console</span>
+            </div>
+            <div>
+              <kbd style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: '#c4b5fd', marginRight: '8px' }}>
+                &larr; / &rarr;
+              </kbd>
+              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 300 }}>Scroll Module Carousel</span>
+            </div>
+            <div>
+              <kbd style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '3px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', color: '#c4b5fd', marginRight: '8px' }}>
+                Tab / Shift+Tab
+              </kbd>
+              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 300 }}>Keyboard Focus Ring Navigation</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Frequently Asked Questions (Accordion) */}
       <div style={{ marginBottom: '60px' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#fff', marginBottom: '24px', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 200, letterSpacing: '-0.02em', color: '#fff', marginBottom: '24px', textAlign: 'center' }}>
           Frequently Asked Questions (FAQs)
         </h2>
 
@@ -211,9 +204,9 @@ export default function HowToUsePage() {
               <div
                 key={idx}
                 style={{
-                  background: 'var(--bg-surface)',
-                  border: `1px solid ${isOpen ? 'var(--border-mint)' : 'var(--border-subtle)'}`,
-                  borderRadius: 'var(--radius-md)',
+                  background: '#080814',
+                  border: `1px solid ${isOpen ? 'rgba(124, 58, 237, 0.45)' : 'rgba(255, 255, 255, 0.08)'}`,
+                  borderRadius: '14px',
                   overflow: 'hidden',
                   transition: 'border-color 0.2s ease',
                 }}
@@ -222,12 +215,12 @@ export default function HowToUsePage() {
                   onClick={() => toggleFAQ(idx)}
                   style={{
                     width: '100%',
-                    padding: '18px 20px',
+                    padding: '18px 22px',
                     background: 'transparent',
                     border: 'none',
                     color: '#fff',
-                    fontSize: '15px',
-                    fontWeight: 600,
+                    fontSize: '14px',
+                    fontWeight: 400,
                     textAlign: 'left',
                     display: 'flex',
                     alignItems: 'center',
@@ -237,17 +230,18 @@ export default function HowToUsePage() {
                   aria-expanded={isOpen}
                 >
                   <span>{faq.question}</span>
-                  {isOpen ? <ChevronUp size={18} color="var(--accent-mint)" /> : <ChevronDown size={18} color="var(--text-muted)" />}
+                  {isOpen ? <ChevronUp size={16} color="#c4b5fd" /> : <ChevronDown size={16} color="rgba(255,255,255,0.4)" />}
                 </button>
 
                 {isOpen && (
                   <div
                     style={{
-                      padding: '0 20px 20px 20px',
+                      padding: '0 22px 22px 22px',
                       fontSize: '13px',
+                      fontWeight: 300,
                       lineHeight: 1.65,
-                      color: 'var(--text-secondary)',
-                      borderTop: '1px solid var(--border-subtle)',
+                      color: 'rgba(255, 255, 255, 0.55)',
+                      borderTop: '1px solid rgba(255, 255, 255, 0.06)',
                       paddingTop: '14px',
                     }}
                   >
