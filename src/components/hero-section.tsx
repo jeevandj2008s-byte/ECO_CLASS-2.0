@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, Map, Zap, Users, Leaf, Activity } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import { CAMPUS_CONFIG, formatNumberIN } from '@/lib/config/campus';
 
 interface HeroLiveStats {
@@ -74,52 +74,62 @@ export function HeroSection() {
   return (
     <section
       style={{
-        paddingTop: '64px',
-        paddingBottom: '56px',
+        paddingTop: '80px',
+        paddingBottom: '48px',
         textAlign: 'center',
         position: 'relative',
         zIndex: 1,
-        maxWidth: '1080px',
+        maxWidth: '960px',
         margin: '0 auto',
       }}
     >
-      {/* 1. Small Pill Badge */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+      {/* Radial shadow overlay behind hero */}
+      <div className="hero-radial-overlay" />
+
+      {/* 1. Eyebrow Pill Badge with Pulsing Dot */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px', position: 'relative', zIndex: 1 }}>
         <div className="eyebrow-badge">
-          <Sparkles size={13} color="var(--accent-mint)" />
+          <span className="eyebrow-pulsing-dot" />
           <span>Eco Class 2026 &bull; AI-Powered Smart Campus Energy Platform</span>
         </div>
       </div>
 
-      {/* 2. Giant Headline on Three Lines */}
+      {/* 2. Giant Headline on Three Lines with Thin Tracking */}
       <h1
         style={{
-          fontSize: 'clamp(40px, 7vw, 76px)',
-          fontWeight: 900,
+          fontSize: 'clamp(2.6rem, 6.2vw, 4.4rem)',
+          fontWeight: 200,
           lineHeight: 1.08,
           letterSpacing: '-0.035em',
           margin: '0 0 24px 0',
           color: '#ffffff',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         Sustainable Energy.
         <br />
         Reimagined in{' '}
-        <span className="gradient-text-mint">Real-Time.</span>
+        <em style={{ fontStyle: 'normal' }} className="gradient-text-violet">
+          Real-Time.
+        </em>
       </h1>
 
-      {/* 3. Centered Paragraph */}
+      {/* 3. Centered Paragraph with Light Font */}
       <p
         style={{
-          fontSize: 'clamp(16px, 2.2vw, 20px)',
-          lineHeight: 1.6,
-          color: 'var(--text-secondary)',
-          maxWidth: '780px',
-          margin: '0 auto 36px auto',
+          fontSize: 'clamp(14px, 1.8vw, 16px)',
+          fontWeight: 300,
+          lineHeight: 1.65,
+          color: 'rgba(255, 255, 255, 0.45)',
+          maxWidth: '620px',
+          margin: '0 auto 38px auto',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         Eco Class creates a living digital twin of{' '}
-        <strong style={{ color: '#ffffff' }}>{CAMPUS_CONFIG.collegeName}</strong>.
+        <strong style={{ color: '#ffffff', fontWeight: 500 }}>{CAMPUS_CONFIG.collegeName}</strong>.
         Uniting computer vision occupancy, smart IoT automation, and AI coaching to bust energy waste campus-wide.
       </p>
 
@@ -130,163 +140,261 @@ export function HeroSection() {
           justifyContent: 'center',
           alignItems: 'center',
           gap: '14px',
-          marginBottom: '52px',
+          marginBottom: '54px',
           flexWrap: 'wrap',
+          position: 'relative',
+          zIndex: 1,
         }}
         className="hero-buttons-container"
       >
         {/* Primary Violet Button */}
-        <Link
-          href="/dashboard"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            padding: '14px 28px',
-            background: 'linear-gradient(135deg, #6d4fe0, #7c3aed)',
-            color: '#ffffff',
-            borderRadius: 'var(--radius-pill)',
-            fontSize: '15px',
-            fontWeight: 700,
-            textDecoration: 'none',
-            boxShadow: 'var(--glow-violet)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-          }}
-        >
+        <Link href="/dashboard" className="strata-btn-primary">
           <span>Launch Command Center</span>
-          <ArrowRight size={18} />
+          <ArrowRight size={16} />
         </Link>
 
         {/* Secondary Outlined Campus Map */}
-        <Link
-          href="/campus-map"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            padding: '14px 26px',
-            background: 'var(--bg-surface)',
-            color: '#f8fafc',
-            borderRadius: 'var(--radius-pill)',
-            fontSize: '15px',
-            fontWeight: 600,
-            textDecoration: 'none',
-            border: '1px solid var(--border-medium)',
-            transition: 'background 0.2s ease, border-color 0.2s ease',
-          }}
-        >
-          <Map size={17} color="var(--accent-mint)" />
+        <Link href="/campus-map" className="strata-btn-secondary">
           <span>Explore Campus Map</span>
         </Link>
 
         {/* Secondary Outlined Ask Eco AI */}
-        <Link
-          href="/assistant"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            padding: '14px 26px',
-            background: 'var(--bg-surface)',
-            color: '#f8fafc',
-            borderRadius: 'var(--radius-pill)',
-            fontSize: '15px',
-            fontWeight: 600,
-            textDecoration: 'none',
-            border: '1px solid var(--border-medium)',
-            transition: 'background 0.2s ease, border-color 0.2s ease',
-          }}
-        >
-          <Sparkles size={17} color="#c4b5fd" />
+        <Link href="/assistant" className="strata-btn-secondary">
+          <Sparkles size={15} color="#a78bfa" />
           <span>Ask Eco AI</span>
         </Link>
       </div>
 
-      {/* 5. Thin Divider */}
+      {/* Thin Subtle Divider */}
       <div
         style={{
-          width: '100%',
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, var(--border-medium), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent)',
           marginBottom: '40px',
+          position: 'relative',
+          zIndex: 1,
         }}
       />
 
-      {/* Live Stat Counters Row */}
+      {/* 5. Live Stat Counters Row */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '24px',
-          padding: '0 12px',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
-        {/* Stat 1: Campus Load */}
+        {/* Metric 1 */}
         <div style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px', fontFamily: 'var(--font-mono)' }}>
-            <Zap size={14} color="#facc15" />
+          {loading ? (
+            <div
+              style={{
+                height: '36px',
+                width: '90px',
+                margin: '0 auto',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontWeight: 200,
+                letterSpacing: '-0.02em',
+              }}
+              className="mono-telemetry gradient-text-stat"
+            >
+              {stats?.liveLoadKW.toFixed(2)}
+              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kW</span>
+            </div>
+          )}
+          <div
+            style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.35)',
+              marginTop: '6px',
+            }}
+          >
             Live Campus Load
           </div>
-          <div className="mono-telemetry" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, color: '#ffffff' }}>
-            {loading ? <Skeleton /> : `${stats?.liveLoadKW} kW`}
-          </div>
-          <div style={{ fontSize: '11px', color: 'var(--accent-mint)', marginTop: '4px' }}>
-            ● Dynamic Load
-          </div>
         </div>
 
-        {/* Stat 2: Energy Saved */}
+        {/* Metric 2 */}
         <div style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px', fontFamily: 'var(--font-mono)' }}>
-            <Activity size={14} color="var(--accent-mint)" />
+          {loading ? (
+            <div
+              style={{
+                height: '36px',
+                width: '90px',
+                margin: '0 auto',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontWeight: 200,
+                letterSpacing: '-0.02em',
+              }}
+              className="mono-telemetry gradient-text-stat"
+            >
+              {stats?.energySavedKWh.toFixed(1)}
+              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kWh</span>
+            </div>
+          )}
+          <div
+            style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.35)',
+              marginTop: '6px',
+            }}
+          >
             Energy Saved Today
           </div>
-          <div className="mono-telemetry" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, color: 'var(--accent-mint)' }}>
-            {loading ? <Skeleton /> : `${stats?.energySavedKWh} kWh`}
-          </div>
-          <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-            vs Unmanaged Baseline
+        </div>
+
+        {/* Metric 3 */}
+        <div style={{ textAlign: 'center' }}>
+          {loading ? (
+            <div
+              style={{
+                height: '36px',
+                width: '90px',
+                margin: '0 auto',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontWeight: 200,
+                letterSpacing: '-0.02em',
+              }}
+              className="mono-telemetry gradient-text-stat"
+            >
+              {stats?.peopleDetected !== undefined ? formatNumberIN(stats.peopleDetected) : '—'}
+            </div>
+          )}
+          <div
+            style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.35)',
+              marginTop: '6px',
+            }}
+          >
+            Students &amp; Faculty Detected
           </div>
         </div>
 
-        {/* Stat 3: People Detected */}
+        {/* Metric 4 */}
         <div style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px', fontFamily: 'var(--font-mono)' }}>
-            <Users size={14} color="#a78bfa" />
-            Students Detected
-          </div>
-          <div className="mono-telemetry" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, color: '#ffffff' }}>
-            {loading ? <Skeleton /> : `${stats?.peopleDetected} Seated`}
-          </div>
-          <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-            Row-Level Vision Mapping
-          </div>
-        </div>
-
-        {/* Stat 4: CO2 Avoided */}
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px', fontFamily: 'var(--font-mono)' }}>
-            <Leaf size={14} color="#34d399" />
+          {loading ? (
+            <div
+              style={{
+                height: '36px',
+                width: '90px',
+                margin: '0 auto',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px',
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: 'clamp(26px, 3.5vw, 36px)',
+                fontWeight: 200,
+                letterSpacing: '-0.02em',
+              }}
+              className="mono-telemetry gradient-text-stat"
+            >
+              {stats?.co2AvoidedKg.toFixed(1)}
+              <span style={{ fontSize: '16px', fontWeight: 300, color: 'rgba(255, 255, 255, 0.4)', marginLeft: '4px' }}>kg</span>
+            </div>
+          )}
+          <div
+            style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.35)',
+              marginTop: '6px',
+            }}
+          >
             CO₂ Avoided Today
-          </div>
-          <div className="mono-telemetry" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, color: '#34d399' }}>
-            {loading ? <Skeleton /> : `${stats?.co2AvoidedKg} kg`}
-          </div>
-          <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-            Factor: {CAMPUS_CONFIG.gridEmissionFactorKgPerKWh} kg/kWh
           </div>
         </div>
       </div>
 
+      {/* 6. Mouse Scroll Animation Indicator at Bottom */}
+      <div
+        style={{
+          marginTop: '60px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '8px',
+          opacity: 0.4,
+          pointerEvents: 'none',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{
+            width: '20px',
+            height: '32px',
+            borderRadius: '9999px',
+            border: '1.5px solid rgba(255, 255, 255, 0.4)',
+            position: 'relative',
+          }}
+        >
+          <div
+            className="scroll-indicator-dot"
+            style={{
+              width: '2px',
+              height: '6px',
+              background: 'rgba(255, 255, 255, 0.75)',
+              borderRadius: '9999px',
+              position: 'absolute',
+              top: '6px',
+              left: '50%',
+            }}
+          />
+        </div>
+        <span
+          style={{
+            fontSize: '9px',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.4)',
+          }}
+        >
+          Scroll
+        </span>
+      </div>
+
       <style jsx>{`
-        @media (max-width: 680px) {
+        @media (max-width: 640px) {
           .hero-buttons-container {
             flex-direction: column !important;
-            width: 100%;
+            width: 100% !important;
           }
           .hero-buttons-container a {
             width: 100% !important;
@@ -294,20 +402,5 @@ export function HeroSection() {
         }
       `}</style>
     </section>
-  );
-}
-
-function Skeleton() {
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        width: '100px',
-        height: '38px',
-        background: 'rgba(255, 255, 255, 0.08)',
-        borderRadius: '6px',
-        animation: 'pulse 1.5s infinite',
-      }}
-    />
   );
 }

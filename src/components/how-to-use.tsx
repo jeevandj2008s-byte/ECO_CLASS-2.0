@@ -105,7 +105,7 @@ export function HowToUseSection() {
   const currentRole = roleDetails[activeRoleTab];
 
   return (
-    <section style={{ margin: '80px 0', position: 'relative' }}>
+    <section style={{ margin: '80px 0', position: 'relative', zIndex: 1 }}>
       {/* Eyebrow & Heading */}
       <div style={{ textAlign: 'center', marginBottom: '44px' }}>
         <div className="eyebrow-badge" style={{ marginBottom: '14px' }}>
@@ -114,15 +114,15 @@ export function HowToUseSection() {
         <h2
           style={{
             fontSize: 'clamp(28px, 4.5vw, 44px)',
-            fontWeight: 800,
-            letterSpacing: '-0.03em',
+            fontWeight: 200,
+            letterSpacing: '-0.035em',
             margin: '0 0 10px 0',
             color: '#ffffff',
           }}
         >
           How to Use Eco Class
         </h2>
-        <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '15px' }}>
+        <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '15px', fontWeight: 300 }}>
           Five simple steps to monitor, automate, and eliminate campus energy waste.
         </p>
       </div>
@@ -139,230 +139,213 @@ export function HowToUseSection() {
         {steps.map((s) => {
           const StepIcon = s.icon;
           return (
-            <div
-              key={s.num}
-              style={{
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--radius-lg)',
-                padding: '22px 18px',
-                position: 'relative',
-                boxShadow: 'var(--shadow-card)',
-              }}
-            >
+            <div key={s.num} className="strata-card-wrapper">
+              <div className="strata-card-aura" />
               <div
+                className="strata-card-inner"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  padding: '24px 20px',
                   justifyContent: 'space-between',
-                  marginBottom: '16px',
                 }}
               >
-                <div
-                  className="mono-telemetry"
-                  style={{
-                    fontSize: '20px',
-                    fontWeight: 800,
-                    color: 'var(--accent-mint)',
-                  }}
-                >
-                  {s.num}
-                </div>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '8px',
-                    background: 'var(--accent-violet-subtle)',
-                    border: '1px solid var(--border-violet)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#c4b5fd',
-                  }}
-                >
-                  <StepIcon size={16} />
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      className="mono-telemetry gradient-text-stat"
+                      style={{
+                        fontSize: '20px',
+                        fontWeight: 300,
+                      }}
+                    >
+                      {s.num}
+                    </div>
+                    <div className="strata-icon-tile" style={{ width: '32px', height: '32px' }}>
+                      <StepIcon size={15} />
+                    </div>
+                  </div>
+
+                  <h3
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      letterSpacing: '0.01em',
+                      margin: '0 0 8px 0',
+                      color: '#ffffff',
+                    }}
+                  >
+                    {s.title}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 300,
+                      lineHeight: 1.6,
+                      color: 'rgba(255, 255, 255, 0.45)',
+                      margin: 0,
+                    }}
+                  >
+                    {s.desc}
+                  </p>
                 </div>
               </div>
-
-              <h3
-                style={{
-                  fontSize: '15px',
-                  fontWeight: 700,
-                  margin: '0 0 8px 0',
-                  color: '#ffffff',
-                }}
-              >
-                {s.title}
-              </h3>
-
-              <p
-                style={{
-                  fontSize: '12px',
-                  lineHeight: 1.6,
-                  color: 'var(--text-secondary)',
-                  margin: 0,
-                }}
-              >
-                {s.desc}
-              </p>
             </div>
           );
         })}
       </div>
 
       {/* Role Tab Switcher & Details Card */}
-      <div
-        style={{
-          background: 'var(--bg-surface)',
-          border: '1px solid var(--border-medium)',
-          borderRadius: 'var(--radius-card)',
-          padding: '36px',
-          boxShadow: 'var(--shadow-card)',
-        }}
-      >
+      <div className="strata-card-wrapper">
+        <div className="strata-card-aura" />
         <div
+          className="strata-card-inner"
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '28px',
-            flexWrap: 'wrap',
-            gap: '16px',
+            padding: '36px',
           }}
         >
-          <div>
-            <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', color: 'var(--accent-mint)', letterSpacing: '0.1em', marginBottom: '4px', fontWeight: 600 }}>
-              ROLE-BASED GOVERNANCE
-            </div>
-            <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: '#fff' }}>
-              Permissions &amp; Capabilities by Role
-            </h3>
-          </div>
-
-          {/* Role Tabs */}
           <div
             style={{
               display: 'flex',
-              gap: '6px',
-              background: 'var(--bg-surface-elevated)',
-              padding: '4px',
-              borderRadius: 'var(--radius-pill)',
-              border: '1px solid var(--border-subtle)',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '28px',
+              flexWrap: 'wrap',
+              gap: '16px',
             }}
           >
-            {(['admin', 'hod', 'worker', 'user'] as UserRole[]).map((r) => {
-              const isSelected = activeRoleTab === r;
-              return (
-                <button
-                  key={r}
-                  onClick={() => setActiveRoleTab(r)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 'var(--radius-pill)',
-                    border: 'none',
-                    background: isSelected ? 'var(--accent-violet)' : 'transparent',
-                    color: isSelected ? '#ffffff' : 'var(--text-secondary)',
-                    fontSize: '12px',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  {r}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+            <div>
+              <div
+                style={{
+                  fontSize: '10px',
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  letterSpacing: '0.1em',
+                  marginBottom: '4px',
+                  fontWeight: 500,
+                }}
+              >
+                ROLE-BASED GOVERNANCE
+              </div>
+              <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 300, letterSpacing: '-0.02em', color: '#fff' }}>
+                Permissions &amp; Capabilities by Role
+              </h3>
+            </div>
 
-        {/* Selected Role Content */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
-          <div>
-            <span
+            {/* Role Tabs */}
+            <div
               style={{
-                fontSize: '10px',
-                fontFamily: 'var(--font-mono)',
-                padding: '3px 8px',
-                borderRadius: '4px',
-                background: 'var(--accent-mint-subtle)',
-                color: 'var(--accent-mint)',
-                border: '1px solid var(--border-mint)',
-                fontWeight: 700,
-                display: 'inline-block',
-                marginBottom: '10px',
+                display: 'flex',
+                gap: '6px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                padding: '4px',
+                borderRadius: 'var(--radius-pill)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
               }}
             >
-              {currentRole.badge}
-            </span>
-            <h4 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 8px 0', color: '#fff' }}>
-              {currentRole.title}
-            </h4>
-            <p style={{ fontSize: '13px', lineHeight: 1.6, color: 'var(--text-secondary)', margin: '0 0 20px 0' }}>
-              {currentRole.subtitle}
-            </p>
-
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link
-                href="/simulator"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '10px 18px',
-                  background: 'linear-gradient(135deg, #6d4fe0, #7c3aed)',
-                  color: '#fff',
-                  borderRadius: 'var(--radius-pill)',
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  boxShadow: '0 0 16px rgba(109, 79, 224, 0.35)',
-                }}
-              >
-                <Cpu size={14} />
-                Try the Simulator
-              </Link>
-              <Link
-                href="/how-to-use"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '10px 18px',
-                  background: 'var(--bg-surface-elevated)',
-                  color: '#f8fafc',
-                  borderRadius: 'var(--radius-pill)',
-                  border: '1px solid var(--border-medium)',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                }}
-              >
-                <BookOpen size={14} color="var(--accent-mint)" />
-                Read Full Guide
-              </Link>
+              {(['admin', 'hod', 'worker', 'user'] as UserRole[]).map((r) => {
+                const isSelected = activeRoleTab === r;
+                return (
+                  <button
+                    key={r}
+                    onClick={() => setActiveRoleTab(r)}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: 'var(--radius-pill)',
+                      border: 'none',
+                      background: isSelected
+                        ? 'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)'
+                        : 'transparent',
+                      color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.5)',
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.04em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      transition: 'all 0.18s ease',
+                    }}
+                  >
+                    {r}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Capabilities List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
-            {currentRole.capabilities.map((cap, i) => (
-              <div
-                key={i}
+          {/* Selected Role Content */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
+            <div>
+              <span
                 style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '10px',
-                  fontSize: '13px',
-                  lineHeight: 1.5,
-                  color: '#e2e8f0',
+                  fontSize: '10px',
+                  fontFamily: 'var(--font-mono)',
+                  padding: '3px 9px',
+                  borderRadius: '4px',
+                  background: 'rgba(124, 58, 237, 0.12)',
+                  color: '#c4b5fd',
+                  border: '1px solid rgba(124, 58, 237, 0.3)',
+                  fontWeight: 500,
+                  letterSpacing: '0.06em',
+                  display: 'inline-block',
+                  marginBottom: '10px',
                 }}
               >
-                <CheckCircle2 size={16} color="var(--accent-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>{cap}</span>
+                {currentRole.badge}
+              </span>
+              <h4 style={{ fontSize: '18px', fontWeight: 400, margin: '0 0 8px 0', color: '#fff' }}>
+                {currentRole.title}
+              </h4>
+              <p
+                style={{
+                  fontSize: '13px',
+                  fontWeight: 300,
+                  lineHeight: 1.6,
+                  color: 'rgba(255, 255, 255, 0.45)',
+                  margin: '0 0 24px 0',
+                }}
+              >
+                {currentRole.subtitle}
+              </p>
+
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <Link href="/simulator" className="strata-btn-primary" style={{ padding: '10px 18px', fontSize: '13px' }}>
+                  <Cpu size={14} />
+                  <span>Try the Simulator</span>
+                </Link>
+                <Link href="/how-to-use" className="strata-btn-secondary" style={{ padding: '10px 18px', fontSize: '13px' }}>
+                  <BookOpen size={14} color="#a78bfa" />
+                  <span>Read Full Guide</span>
+                </Link>
               </div>
-            ))}
+            </div>
+
+            {/* Capabilities List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
+              {currentRole.capabilities.map((cap, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '10px',
+                    fontSize: '13px',
+                    fontWeight: 300,
+                    lineHeight: 1.55,
+                    color: 'rgba(255, 255, 255, 0.85)',
+                  }}
+                >
+                  <CheckCircle2 size={16} color="#8b5cf6" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <span>{cap}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

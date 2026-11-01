@@ -42,125 +42,109 @@ export function ModuleCard({
     : route;
 
   return (
-    <Link
-      href={finalHref}
+    <div
+      className="strata-card-wrapper module-card-outer"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         width: '310px',
         minWidth: '310px',
         height: '380px',
-        padding: '24px',
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border-subtle)',
-        borderRadius: 'var(--radius-card)',
-        textDecoration: 'none',
-        color: 'inherit',
         scrollSnapAlign: 'start',
-        position: 'relative',
-        transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
-        boxShadow: 'var(--shadow-card)',
-        overflow: 'hidden',
       }}
-      className="module-card-item"
     >
-      {/* Top Section */}
-      <div>
-        {/* Top Row: Icon Tile + Title + Monospace Tag Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="icon-tile-violet">
-              <Icon size={20} />
-            </div>
-            <div>
-              <div
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
-                  color: '#ffffff',
-                }}
-              >
-                {title}
+      <div className="strata-card-aura" />
+      <Link
+        href={finalHref}
+        className="strata-card-inner"
+        style={{
+          padding: '24px',
+          textDecoration: 'none',
+          color: 'inherit',
+          justifyContent: 'space-between',
+        }}
+      >
+        {/* Top Section */}
+        <div>
+          {/* Top Row: Icon Tile + Title + Tag Pill */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div className="strata-icon-tile">
+                <Icon size={18} />
+              </div>
+              <div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    color: 'rgba(255, 255, 255, 0.95)',
+                  }}
+                >
+                  {title}
+                </div>
               </div>
             </div>
+            <span
+              style={{
+                fontSize: '10px',
+                fontFamily: 'var(--font-mono)',
+                padding: '3px 9px',
+                borderRadius: 'var(--radius-pill)',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                color: 'rgba(255, 255, 255, 0.4)',
+                letterSpacing: '0.04em',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {tag}
+            </span>
           </div>
-          <span
-            style={{
-              fontSize: '10px',
-              fontFamily: 'var(--font-mono)',
-              padding: '3px 8px',
-              borderRadius: 'var(--radius-pill)',
-              background: 'rgba(255, 255, 255, 0.06)',
-              border: '1px solid var(--border-subtle)',
-              color: 'var(--text-muted)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {tag}
-          </span>
-        </div>
 
-        {/* Big Stat / Word */}
-        <div style={{ margin: '16px 0 12px 0' }}>
+          {/* Big Stat or Key Highlight */}
           <div
-            className={`mono-telemetry ${statGradient ? 'gradient-text-mint' : ''}`}
             style={{
               fontSize: '32px',
-              fontWeight: 800,
+              fontWeight: 200,
               letterSpacing: '-0.02em',
-              color: statGradient ? 'inherit' : '#ffffff',
-              lineHeight: 1.1,
+              marginBottom: '14px',
+              minHeight: '40px',
+              display: 'flex',
+              alignItems: 'center',
             }}
+            className={statGradient ? 'gradient-text-stat mono-telemetry' : 'mono-telemetry'}
           >
             {bigStat}
           </div>
+
+          {/* Short Module Description */}
+          <p
+            style={{
+              fontSize: '13px',
+              fontWeight: 300,
+              lineHeight: 1.6,
+              color: 'rgba(255, 255, 255, 0.45)',
+              margin: 0,
+            }}
+          >
+            {description}
+          </p>
         </div>
 
-        {/* Short Description */}
-        <p
-          style={{
-            fontSize: '13px',
-            lineHeight: 1.6,
-            color: 'var(--text-secondary)',
-            margin: 0,
-          }}
-        >
-          {description}
-        </p>
-      </div>
-
-      {/* Bottom Row: Aligned "Read now →" Pill Button */}
-      <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-pill)',
-            background: 'linear-gradient(135deg, rgba(109, 79, 224, 0.35), rgba(126, 232, 214, 0.2))',
-            border: '1px solid rgba(109, 79, 224, 0.45)',
-            color: '#ffffff',
-            fontSize: '12px',
-            fontWeight: 700,
-            letterSpacing: '0.02em',
-          }}
-        >
-          <span>Read now</span>
-          <ArrowRight size={14} color="var(--accent-mint)" />
+        {/* Bottom Action Pill */}
+        <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+          <div
+            className="strata-btn-pill"
+            style={{
+              width: '100%',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span style={{ fontWeight: 400 }}>Read now</span>
+            <ArrowRight size={14} />
+          </div>
         </div>
-      </div>
-
-      <style jsx>{`
-        .module-card-item:hover {
-          transform: translateY(-4px);
-          border-color: var(--border-violet) !important;
-          box-shadow: var(--shadow-card-hover) !important;
-        }
-      `}</style>
-    </Link>
+      </Link>
+    </div>
   );
 }

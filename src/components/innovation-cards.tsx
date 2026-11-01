@@ -33,7 +33,7 @@ export function InnovationCards() {
   ];
 
   return (
-    <section style={{ margin: '80px 0 60px 0' }}>
+    <section style={{ margin: '80px 0 60px 0', position: 'relative', zIndex: 1 }}>
       {/* Centered Eyebrow, Heading & Subtext */}
       <div style={{ textAlign: 'center', marginBottom: '44px' }}>
         <div className="eyebrow-badge" style={{ marginBottom: '14px' }}>
@@ -42,15 +42,24 @@ export function InnovationCards() {
         <h2
           style={{
             fontSize: 'clamp(28px, 4.5vw, 44px)',
-            fontWeight: 800,
-            letterSpacing: '-0.03em',
+            fontWeight: 200,
+            letterSpacing: '-0.035em',
             margin: '0 0 10px 0',
             color: '#ffffff',
           }}
         >
           Engineered for Campus Net-Zero Goals
         </h2>
-        <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '15px', maxWidth: '680px', marginInline: 'auto' }}>
+        <p
+          style={{
+            margin: '0 auto',
+            color: 'rgba(255, 255, 255, 0.45)',
+            fontSize: '15px',
+            fontWeight: 300,
+            maxWidth: '680px',
+            lineHeight: 1.6,
+          }}
+        >
           Fully simulated with progressive hardware support for physical smart meters, relays, and IP cameras.
         </p>
       </div>
@@ -66,78 +75,68 @@ export function InnovationCards() {
         {innovations.map((item, i) => {
           const Icon = item.icon;
           return (
-            <div
-              key={i}
-              style={{
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--radius-card)',
-                padding: '32px 28px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                boxShadow: 'var(--shadow-card)',
-                transition: 'transform 0.25s ease, border-color 0.25s ease',
-              }}
-              className="innovation-card"
-            >
-              <div>
-                <div className="icon-tile-violet" style={{ marginBottom: '20px' }}>
-                  <Icon size={22} />
+            <div key={i} className="strata-card-wrapper">
+              <div className="strata-card-aura" />
+              <div
+                className="strata-card-inner"
+                style={{
+                  padding: '32px 28px',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div className="strata-icon-tile" style={{ marginBottom: '22px' }}>
+                    <Icon size={20} />
+                  </div>
+
+                  <h3
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: 400,
+                      letterSpacing: '-0.01em',
+                      color: '#ffffff',
+                      margin: '0 0 12px 0',
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      lineHeight: 1.65,
+                      color: 'rgba(255, 255, 255, 0.45)',
+                      margin: '0 0 24px 0',
+                    }}
+                  >
+                    {item.description}
+                  </p>
                 </div>
 
-                <h3
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: '#ffffff',
-                    margin: '0 0 12px 0',
-                  }}
-                >
-                  {item.title}
-                </h3>
-
-                <p
-                  style={{
-                    fontSize: '13px',
-                    lineHeight: 1.65,
-                    color: 'var(--text-secondary)',
-                    margin: '0 0 24px 0',
-                  }}
-                >
-                  {item.description}
-                </p>
-              </div>
-
-              <div>
-                <Link
-                  href={item.href}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    fontSize: '13px',
-                    fontWeight: 700,
-                    color: 'var(--accent-mint)',
-                    textDecoration: 'none',
-                    transition: 'gap 0.2s ease',
-                  }}
-                >
-                  <span>{item.linkText}</span>
-                  <ArrowRight size={14} />
-                </Link>
+                <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                  <Link
+                    href={item.href}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '13px',
+                      fontWeight: 400,
+                      color: '#c4b5fd',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s ease, gap 0.2s ease',
+                    }}
+                  >
+                    <span>{item.linkText}</span>
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
-
-      <style jsx>{`
-        .innovation-card:hover {
-          transform: translateY(-4px);
-          border-color: var(--border-mint) !important;
-        }
-      `}</style>
     </section>
   );
 }

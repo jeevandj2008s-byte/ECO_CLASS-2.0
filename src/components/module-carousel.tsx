@@ -184,7 +184,7 @@ export function ModuleCarousel() {
   ];
 
   return (
-    <section style={{ margin: '80px 0 60px 0', position: 'relative' }}>
+    <section style={{ margin: '80px 0 60px 0', position: 'relative', zIndex: 1 }}>
       {/* Section Header */}
       <div
         style={{
@@ -197,11 +197,14 @@ export function ModuleCarousel() {
         }}
       >
         <div>
+          <div className="eyebrow-badge" style={{ marginBottom: '10px' }}>
+            <span>MODULAR DIGITAL TWIN</span>
+          </div>
           <h2
             style={{
               fontSize: 'clamp(28px, 4.5vw, 44px)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
+              fontWeight: 200,
+              letterSpacing: '-0.035em',
               lineHeight: 1.15,
               margin: '0 0 8px 0',
               color: '#ffffff',
@@ -209,9 +212,9 @@ export function ModuleCarousel() {
           >
             Explore All Campus
             <br />
-            <span className="gradient-text-mint">Energy Twin Systems</span>
+            <span className="gradient-text-violet">Energy Twin Systems</span>
           </h2>
-          <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '15px' }}>
+          <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.45)', fontSize: '15px', fontWeight: 300 }}>
             Click any module below to open its dedicated view with live telemetry and controls &rarr;
           </p>
         </div>
@@ -222,12 +225,12 @@ export function ModuleCarousel() {
             onClick={() => scroll('left')}
             disabled={!canScrollLeft}
             style={{
-              width: '44px',
-              height: '44px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-medium)',
-              color: canScrollLeft ? '#ffffff' : 'var(--text-muted)',
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              color: canScrollLeft ? '#ffffff' : 'rgba(255, 255, 255, 0.25)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -237,19 +240,19 @@ export function ModuleCarousel() {
             }}
             aria-label="Scroll carousel left"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={19} />
           </button>
 
           <button
             onClick={() => scroll('right')}
             disabled={!canScrollRight}
             style={{
-              width: '44px',
-              height: '44px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-medium)',
-              color: canScrollRight ? '#ffffff' : 'var(--text-muted)',
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              color: canScrollRight ? '#ffffff' : 'rgba(255, 255, 255, 0.25)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -259,7 +262,7 @@ export function ModuleCarousel() {
             }}
             aria-label="Scroll carousel right"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={19} />
           </button>
         </div>
       </div>
